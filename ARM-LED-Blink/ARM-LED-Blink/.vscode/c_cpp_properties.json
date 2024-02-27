@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Edited",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "STM32F103x6"
+            ]
+        }
+    ],
+    "version": 4
+}
