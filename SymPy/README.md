@@ -1,0 +1,3 @@
+# SymPy
+
+some SymPy scripts
