@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # @Author: @IamRezaMousavi
 # @Date:   2023-02-14 19:23:33
 # @Last Modified by:   @IamRezaMousavi
@@ -6,6 +5,7 @@
 from rest_framework import serializers
 
 from .models import Post
+
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:

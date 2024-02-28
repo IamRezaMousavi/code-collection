@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # @Author: @IamRezaMousavi
 # @Date:   2023-02-14 16:55:27
 # @Last Modified by:   @IamRezaMousavi

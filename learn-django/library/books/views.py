@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # @Author: @IamRezaMousavi
 # @Date:   2023-02-14 16:45:49
 # @Last Modified by:   @IamRezaMousavi
@@ -6,6 +5,7 @@
 from django.views.generic import ListView
 
 from .models import Book
+
 
 class BookListView(ListView):
     model = Book

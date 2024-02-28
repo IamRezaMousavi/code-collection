@@ -14,11 +14,11 @@ class main(QtWidgets.QDialog):
     def __init__(self):
         super(main, self).__init__()
         self.setMinimumSize(800, 500)
-        '''
+        """
         self.setWindowFlags(
             self.windowFlags() | QtCore.Qt.FramelessWindowHint
         )
-        '''
+        """
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground, on=True)
 
         hwnd = self.winId()

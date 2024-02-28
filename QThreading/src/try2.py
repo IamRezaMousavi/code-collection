@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # @Author: @IamRezaMousavi
 # @Date:   2022-07-29 04:06:52
 # @Last Modified by:   @IamRezaMousavi
@@ -7,7 +6,7 @@
 import sys
 from time import sleep
 
-from PyQt5.QtCore import Qt, QObject, QThread, pyqtSignal, QThreadPool
+from PyQt5.QtCore import QObject, Qt, QThread, QThreadPool, pyqtSignal
 from PyQt5.QtWidgets import (
     QApplication,
     QLabel,
@@ -16,6 +15,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+
 
 # Step 1: Create a worker class
 class Worker(QObject):
@@ -29,6 +29,7 @@ class Worker(QObject):
             self.progress.emit(i + 1)
         self.finished.emit()
 
+
 class Window(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -36,18 +37,18 @@ class Window(QMainWindow):
         self.setupUi()
 
     def setupUi(self):
-        self.setWindowTitle("Freezing GUI")
+        self.setWindowTitle('Freezing GUI')
         self.resize(300, 150)
         self.centralWidget = QWidget()
         self.setCentralWidget(self.centralWidget)
         # Create and connect widgets
-        self.clicksLabel = QLabel("Counting: 0 clicks", self)
+        self.clicksLabel = QLabel('Counting: 0 clicks', self)
         self.clicksLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        self.stepLabel = QLabel("Long-Running Step: 0")
+        self.stepLabel = QLabel('Long-Running Step: 0')
         self.stepLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        self.countBtn = QPushButton("Click me!", self)
+        self.countBtn = QPushButton('Click me!', self)
         self.countBtn.clicked.connect(self.countClicks)
-        self.longRunningBtn = QPushButton("Long-Running Task!", self)
+        self.longRunningBtn = QPushButton('Long-Running Task!', self)
         self.longRunningBtn.clicked.connect(self.runLongTask)
         # Set the layout
         layout = QVBoxLayout()
@@ -57,14 +58,14 @@ class Window(QMainWindow):
         layout.addWidget(self.stepLabel)
         layout.addWidget(self.longRunningBtn)
         self.centralWidget.setLayout(layout)
-    
+
     def countClicks(self):
         self.clicksCount += 1
-        self.clicksLabel.setText(f"Counting: {self.clicksCount} clicks")
-    
+        self.clicksLabel.setText(f'Counting: {self.clicksCount} clicks')
+
     def reportProgress(self, n):
-        self.stepLabel.setText(f"Long-Running Step: {n}")
-    
+        self.stepLabel.setText(f'Long-Running Step: {n}')
+
     def runLongTask(self):
         # Step 2: Create a QThread object
         self.thread = QThread()
@@ -83,15 +84,11 @@ class Window(QMainWindow):
 
         # Final resets
         self.longRunningBtn.setEnabled(False)
-        self.thread.finished.connect(
-            lambda: self.longRunningBtn.setEnabled(True)
-        )
-        self.thread.finished.connect(
-            lambda: self.stepLabel.setText("Long-Running Step: 0")
-        )
+        self.thread.finished.connect(lambda: self.longRunningBtn.setEnabled(True))
+        self.thread.finished.connect(lambda: self.stepLabel.setText('Long-Running Step: 0'))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     win = Window()
     win.show()

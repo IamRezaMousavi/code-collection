@@ -1,5 +1,4 @@
-"""
-WSGI config for library project.
+"""WSGI config for library project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

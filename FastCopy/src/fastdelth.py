@@ -62,7 +62,7 @@ def deletePath(q: Queue, path: str, filesSize: Queue):
             q.put(path)
 
     except Exception as e:
-        logging.error(e)
+        logging.exception(e)
         print(e)
 
 

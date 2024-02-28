@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # @Author: @IamRezaMousavi
 # @Date:   2022-07-29 04:22:21
 # @Last Modified by:   @IamRezaMousavi
@@ -19,7 +18,8 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-logging.basicConfig(format="%(message)s", level=logging.INFO)
+logging.basicConfig(format='%(message)s', level=logging.INFO)
+
 
 # 1. Subclass QRunnable
 class Runnable(QRunnable):
@@ -30,8 +30,9 @@ class Runnable(QRunnable):
     def run(self):
         # Your long-running task goes here ...
         for i in range(5):
-            logging.info(f"Working in thread {self.n}, step {i + 1}/5")
+            logging.info(f'Working in thread {self.n}, step {i + 1}/5')
             time.sleep(random.randint(700, 2500) / 1000)
+
 
 class Window(QMainWindow):
     def __init__(self, parent=None):
@@ -39,14 +40,14 @@ class Window(QMainWindow):
         self.setupUi()
 
     def setupUi(self):
-        self.setWindowTitle("QThreadPool + QRunnable")
+        self.setWindowTitle('QThreadPool + QRunnable')
         self.resize(250, 150)
         self.centralWidget = QWidget()
         self.setCentralWidget(self.centralWidget)
         # Create and connect widgets
-        self.label = QLabel("Hello, World!")
+        self.label = QLabel('Hello, World!')
         self.label.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        countBtn = QPushButton("Click me!")
+        countBtn = QPushButton('Click me!')
         countBtn.clicked.connect(self.runTasks)
         # Set the layout
         layout = QVBoxLayout()
@@ -56,7 +57,7 @@ class Window(QMainWindow):
 
     def runTasks(self):
         threadCount = QThreadPool.globalInstance().maxThreadCount()
-        self.label.setText(f"Running {threadCount} Threads")
+        self.label.setText(f'Running {threadCount} Threads')
         pool = QThreadPool.globalInstance()
         for i in range(threadCount):
             # 2. Instantiate the subclass of QRunnable
@@ -65,7 +66,7 @@ class Window(QMainWindow):
             pool.start(runnable)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = Window()
     window.show()

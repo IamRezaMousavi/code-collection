@@ -51,6 +51,7 @@ def human_time(seconds, decimals=1):
     Returns:
     -------
         str: Human-readable time.
+
     """
     input_is_int = isinstance(seconds, int)
     if seconds < 0:

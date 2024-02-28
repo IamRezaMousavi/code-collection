@@ -1,7 +1,8 @@
 line-length = 100
+
+[lint]
 select = ["ALL"]
 
-[flake8-quotes]
-inline-quotes = "single"
-multiline-quotes = "single"
+[format]
+quote-style = "single"
 

@@ -1,15 +1,16 @@
-# -*- coding: utf-8 -*-
 # @Author: @IamRezaMousavi
 # @Date:   2023-02-10 16:51:21
 # @Last Modified by:   @IamRezaMousavi
 # @Last Modified time: 2023-02-14 16:30:58
 from django.contrib import admin
 
-from .models import Question, Choice
+from .models import Choice, Question
+
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 1
+
 
 class QuestionAdmin(admin.ModelAdmin):
     field = ['pub_date', 'question_text']

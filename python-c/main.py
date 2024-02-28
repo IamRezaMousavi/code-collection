@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # @Author: @IamRezaMousavi
 # @Date:   2022-12-20 14:09:51
 # @Last Modified by:   @IamRezaMousavi
@@ -8,7 +7,7 @@ import ctypes
 import sys
 
 if sys.platform.startswith('win'):
-    libname = "./funcs.dll"
+    libname = './funcs.dll'
 
 cfunc = ctypes.CDLL(libname)
 

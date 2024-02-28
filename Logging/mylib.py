@@ -11,7 +11,10 @@ logger.setLevel(logging.DEBUG)
 logHandler = logging.FileHandler('log/project.log')
 logHandler.setLevel(logging.DEBUG)
 logHandler.setFormatter(
-    logging.Formatter('%(asctime)s|%(name)s|%(levelname)s|%(message)s', datefmt='%Y-%m-%d %H:%M:%S'),
+    logging.Formatter(
+        '%(asctime)s|%(name)s|%(levelname)s|%(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+    ),
 )
 logger.addHandler(logHandler)
 

@@ -9,12 +9,12 @@ import time
 from selenium import webdriver
 
 path = os.path.dirname(os.path.abspath(__file__))
-address = os.path.join(path, "chromedriver.exe")
-username = "thecleverking1"
-password = "13781378"
+address = os.path.join(path, 'chromedriver.exe')
+username = 'thecleverking1'
+password = '13781378'
 
 driver = webdriver.Chrome(executable_path=address)
-driver.get("https://instagram.com")
+driver.get('https://instagram.com')
 
 
 user = driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[1]/div/label/input')

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # @Author: @IamRezaMousavi
 # @Date:   2022-01-06 06:52:51
 # @Last Modified by:   @IamRezaMousavi
@@ -11,7 +10,7 @@ import serial
 
 
 class Communication:
-    def __init__(self, portName="0"):
+    def __init__(self, portName='0'):
         self.baudrate = 9600
         self.portName = portName
         self.ser = serial.Serial()
@@ -27,12 +26,16 @@ class Communication:
     def getData(self):
         if self.isOpen():
             value = self.ser.readline()
-            decoded_bytes = str(value[0 : len(value)-2].decode("utf-8"))
-            value_chain = decoded_bytes.split(",")
+            decoded_bytes = str(value[0 : len(value) - 2].decode('utf-8'))
+            value_chain = decoded_bytes.split(',')
         elif self.dummyMode:
             now = datetime.now().second + (datetime.now().microsecond / 10**6)
-            value_chain = [now] + random.sample(range(0, 300), 1) + \
-                [random.getrandbits(1)] + random.sample(range(0, 20), 8)
+            value_chain = (
+                [now]
+                + random.sample(range(300), 1)
+                + [random.getrandbits(1)]
+                + random.sample(range(20), 8)
+            )
         return value_chain
 
     def isOpen(self):

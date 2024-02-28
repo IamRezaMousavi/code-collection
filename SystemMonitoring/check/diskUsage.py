@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # @Author: S.Reza Mousavi
 # @Date:   2022-01-24 18:50:31
 # @Last Modified by:   S.Reza Mousavi
@@ -13,8 +12,8 @@ from psutil._common import bytes2human
 
 
 def main():
-    templ = "%-17s %8s %8s %8s %5s%% %9s  %s"
-    print(templ % ("Device", "Total", "Used", "Free", "Use ", "Type", "Mount"))
+    templ = '%-17s %8s %8s %8s %5s%% %9s  %s'
+    print(templ % ('Device', 'Total', 'Used', 'Free', 'Use ', 'Type', 'Mount'))
     for part in psutil.disk_partitions(all=False):
         if os.name == 'nt':
             if 'cdrom' in part.opts or part.fstype == '':
@@ -23,15 +22,18 @@ def main():
                 # partition or just hang.
                 continue
         usage = psutil.disk_usage(part.mountpoint)
-        print(templ % (
-            part.device,
-            bytes2human(usage.total),
-            bytes2human(usage.used),
-            bytes2human(usage.free),
-            int(usage.percent),
-            part.fstype,
-            part.mountpoint)
-            )
+        print(
+            templ
+            % (
+                part.device,
+                bytes2human(usage.total),
+                bytes2human(usage.used),
+                bytes2human(usage.free),
+                int(usage.percent),
+                part.fstype,
+                part.mountpoint,
+            ),
+        )
 
 
 if __name__ == '__main__':

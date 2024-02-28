@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # @Author: @IamRezaMousavi
 # @Date:   2022-07-29 03:57:46
 # @Last Modified by:   @IamRezaMousavi
@@ -17,6 +16,7 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
+
 class Window(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -24,18 +24,18 @@ class Window(QMainWindow):
         self.setupUi()
 
     def setupUi(self):
-        self.setWindowTitle("Freezing GUI")
+        self.setWindowTitle('Freezing GUI')
         self.resize(300, 150)
         self.centralWidget = QWidget()
         self.setCentralWidget(self.centralWidget)
         # Create and connect widgets
-        self.clicksLabel = QLabel("Counting: 0 clicks", self)
+        self.clicksLabel = QLabel('Counting: 0 clicks', self)
         self.clicksLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        self.stepLabel = QLabel("Long-Running Step: 0")
+        self.stepLabel = QLabel('Long-Running Step: 0')
         self.stepLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        self.countBtn = QPushButton("Click me!", self)
+        self.countBtn = QPushButton('Click me!', self)
         self.countBtn.clicked.connect(self.countClicks)
-        self.longRunningBtn = QPushButton("Long-Running Task!", self)
+        self.longRunningBtn = QPushButton('Long-Running Task!', self)
         self.longRunningBtn.clicked.connect(self.runLongTask)
         # Set the layout
         layout = QVBoxLayout()
@@ -48,10 +48,10 @@ class Window(QMainWindow):
 
     def countClicks(self):
         self.clicksCount += 1
-        self.clicksLabel.setText(f"Counting: {self.clicksCount} clicks")
+        self.clicksLabel.setText(f'Counting: {self.clicksCount} clicks')
 
     def reportProgress(self, n):
-        self.stepLabel.setText(f"Long-Running Step: {n}")
+        self.stepLabel.setText(f'Long-Running Step: {n}')
 
     def runLongTask(self):
         """Long-running task in 5 steps."""
@@ -59,7 +59,8 @@ class Window(QMainWindow):
             sleep(1)
             self.reportProgress(i + 1)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     win = Window()
     win.show()
