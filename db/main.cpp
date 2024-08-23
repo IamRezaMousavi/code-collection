@@ -26,8 +26,7 @@ int main(int argc, const char *argv[]) {
 
   persons[2].name = "mohammad";
   db.update(persons[2]);
-  std::cout << persons[2].id << ": " << persons[2].name << " updated!"
-			<< std::endl;
+  std::cout << persons[2].id << ": " << persons[2].name << " updated!" << std::endl;
 
   db.del(persons[0].id);
   std::cout << persons[0].id << " deleted!" << std::endl;

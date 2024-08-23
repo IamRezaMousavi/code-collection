@@ -14,8 +14,8 @@ public:
   Complex(const double real = 0, const double imaginary = 0);
   Complex operator()(const double real = 0, const double imaginary = 0);
 
-  double  radial() const;
-  double  angular() const;
+  double radial() const;
+  double angular() const;
   Complex conjugate() const;
 
   Complex operator+(const Complex other) const;

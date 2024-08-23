@@ -51,8 +51,7 @@ std::vector<Person> PersonDb::getPersons() {
 }
 
 int PersonDb::insert(Person person) {
-  std::string sql
-	  = "INSERT INTO person VALUES (NULL, \"" + person.name + "\");";
+  std::string sql = "INSERT INTO person VALUES (NULL, \"" + person.name + "\");";
   ret = sqlite3_exec(DB, sql.c_str(), NULL, 0, &errorMessage);
   if (ret != SQLITE_OK) {
 	std::cerr << "Error insert to DB" << sqlite3_errmsg(DB) << std::endl;
@@ -75,8 +74,7 @@ void PersonDb::update(Person person) {
 }
 
 void PersonDb::del(int personId) {
-  std::string sql
-	  = "DELETE FROM person WHERE id = " + std::to_string(personId) + ";";
+  std::string sql = "DELETE FROM person WHERE id = " + std::to_string(personId) + ";";
   ret = sqlite3_exec(DB, sql.c_str(), NULL, 0, &errorMessage);
   if (ret != SQLITE_OK) {
 	std::cerr << "Error Delete from DB" << std::endl;

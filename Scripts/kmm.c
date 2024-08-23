@@ -4,7 +4,6 @@
  * @Last Modified by:   S.Reza Mousavi
  * @Last Modified time: 2021-12-30 21:15:01
  */
-#include <conio.h>
 #include <stdio.h>
 
 int kmm(int num1, int num2);
@@ -16,23 +15,22 @@ int main(int argc, const char *argv[]) {
 
   printf("%d\n", kmm(y, x));
 
-  getch();
   return 0;
 }
 
 int kmm(int num1, int num2) {
-  int max     = (num1 > num2) ? num1 : num2;
+  int max = (num1 > num2) ? num1 : num2;
   int enother = (num1 == max) ? num2 : num1;
 
   if (max % enother == 0) {
-    return max;
+	return max;
   } else {
-    int number = max;
-    int count  = 2;
-    while (number % enother != 0) {
-      number = max * count;
-      count++;
-    }
-    return number;
+	int number = max;
+	int count = 2;
+	while (number % enother != 0) {
+	  number = max * count;
+	  count++;
+	}
+	return number;
   }
 }

@@ -7,13 +7,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void     checkFile(const char *fileName);
+void checkFile(const char *fileName);
 long int getFileSize(const char *fileName);
 
 int main(int argc, const char *argv[]) {
   if (argc != 2) {
-    printf("\n\nUsage Error: key [FileName.Extension]");
-    exit(1);
+	printf("\n\nUsage Error: key [FileName.Extension]");
+	exit(1);
   }
 
   checkFile(argv[1]);
@@ -24,16 +24,16 @@ int main(int argc, const char *argv[]) {
   FILE *file;
   file = fopen(argv[1], "rb");
 
-  char    *data  = (char *)malloc(size);
+  char *data = (char *)malloc(size);
   long int index = 0;
   while (!feof(file))
-    data[index++] = fgetc(file);
+	data[index++] = fgetc(file);
   fclose(file);
 
   file = fopen(argv[1], "wb");
 
   for (size_t i = 0; i < index - 1; i++)
-    fputc((data[i] ^ 0x60), file);
+	fputc((data[i] ^ 0x60), file);
   fclose(file);
   free(data);
 
@@ -46,8 +46,8 @@ void checkFile(const char *fileName) {
 
   // checking if the file exist or not
   if (filePtr == NULL) {
-    printf("\nFile Error: File Not Found!\n");
-    exit(1);
+	printf("\nFile Error: File Not Found!\n");
+	exit(1);
   }
 
   fclose(filePtr);

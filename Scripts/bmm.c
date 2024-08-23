@@ -21,18 +21,18 @@ int main(int argc, const char *argv[]) {
 }
 
 int bmm(int num1, int num2) {
-  int min     = (num1 < num2) ? num1 : num2;
+  int min = (num1 < num2) ? num1 : num2;
   int enother = (num1 == min) ? num2 : num1;
   if (enother % min == 0) {
-    return min;
+	return min;
   } else {
-    int bmm = 1;
-    for (int i = 2; i <= min / 2; i++) {
-      if ((min % i == 0) && (enother % i == 0)) {
-        bmm = i;
-        break;
-      }
-    }
-    return bmm;
+	int bmm = 1;
+	for (int i = 2; i <= min / 2; i++) {
+	  if ((min % i == 0) && (enother % i == 0)) {
+		bmm = i;
+		break;
+	  }
+	}
+	return bmm;
   }
 }

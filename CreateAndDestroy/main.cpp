@@ -9,7 +9,7 @@
 #include <iostream>
 using namespace std;
 
-void             createObject();
+void createObject();
 createAndDestroy globalObject1(1), globalObject2(2);
 
 int main(int argc, const char *argv[]) {
@@ -22,5 +22,5 @@ int main(int argc, const char *argv[]) {
 
 void createObject() {
   static createAndDestroy staticObject(5);
-  createAndDestroy        automaticObject(6);
+  createAndDestroy automaticObject(6);
 }
