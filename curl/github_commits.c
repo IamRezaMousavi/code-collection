@@ -5,11 +5,10 @@
  * it under the terms of the MIT license. See LICENSE for details.
  */
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <curl/curl.h>
 #include <jansson.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define BUFFER_SIZE (256 * 1024) /* 256 KB */
 
@@ -20,15 +19,13 @@
    text if there's no newline */
 static int newline_offset(const char *text) {
   const char *newline = strchr(text, '\n');
-  if (!newline)
-	return strlen(text);
-  else
-	return (int)(newline - text);
+  if (!newline) return strlen(text);
+  else return (int)(newline - text);
 }
 
 struct write_result {
   char *data;
-  int pos;
+  int   pos;
 };
 
 static size_t write_response(void *ptr, size_t size, size_t nmemb, void *stream) {
@@ -46,11 +43,11 @@ static size_t write_response(void *ptr, size_t size, size_t nmemb, void *stream)
 }
 
 static char *request(const char *url) {
-  CURL *curl = NULL;
-  CURLcode status;
+  CURL              *curl = NULL;
+  CURLcode           status;
   struct curl_slist *headers = NULL;
-  char *data = NULL;
-  long code;
+  char              *data    = NULL;
+  long               code;
 
   curl_global_init(CURL_GLOBAL_ALL);
   curl = curl_easy_init();
@@ -102,10 +99,10 @@ error:
 
 int main(int argc, char *argv[]) {
   size_t i;
-  char *text;
-  char url[URL_SIZE];
+  char  *text;
+  char   url[URL_SIZE];
 
-  json_t *root;
+  json_t      *root;
   json_error_t error;
 
   if (argc != 3) {
@@ -134,7 +131,7 @@ int main(int argc, char *argv[]) {
   }
 
   for (i = 0; i < json_array_size(root); i++) {
-	json_t *data, *sha, *commit, *message;
+	json_t     *data, *sha, *commit, *message;
 	const char *message_text;
 
 	data = json_array_get(root, i);

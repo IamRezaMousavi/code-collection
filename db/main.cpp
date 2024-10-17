@@ -5,7 +5,7 @@
 #include "PersonDb.hpp"
 
 int main(int argc, const char *argv[]) {
-  PersonDb db("person.db");
+  PersonDb            db("person.db");
   std::vector<Person> personArr = db.getPersons();
   std::cout << "Persons " << std::endl;
   for (auto p : personArr)
