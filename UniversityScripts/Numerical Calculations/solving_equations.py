@@ -73,13 +73,11 @@ class SolvingEquation:
                 break
             if fc > 0:
                 print(
-                    '| %3d |   %.5f   |   %.5f   |   %.5f   |  %.5f  |  %.5f  |  %.5f  |'
-                    % (n, a, b, c, fa, fc, en),
+                    '| %3d |   %.5f   |   %.5f   |   %.5f   |  %.5f  |  %.5f  |  %.5f  |' % (n, a, b, c, fa, fc, en),
                 )
             else:
                 print(
-                    '| %3d |   %.5f   |   %.5f   |   %.5f   |  %.5f  | %.5f  |  %.5f  |'
-                    % (n, a, b, c, fa, fc, en),
+                    '| %3d |   %.5f   |   %.5f   |   %.5f   |  %.5f  | %.5f  |  %.5f  |' % (n, a, b, c, fa, fc, en),
                 )
             if sign(fc) * sign(fa) < 0:
                 b = c
@@ -93,13 +91,11 @@ class SolvingEquation:
         fc = func(c)
         if fc >= 0:
             print(
-                '| %3d |   %.5f   |   %.5f   |   %.5f   |  %.5f  |  %.5f  |  %.5f  |'
-                % (n, a, b, c, fa, fc, en),
+                '| %3d |   %.5f   |   %.5f   |   %.5f   |  %.5f  |  %.5f  |  %.5f  |' % (n, a, b, c, fa, fc, en),
             )
         else:
             print(
-                '| %3d |   %.5f   |   %.5f   |   %.5f   |  %.5f  | %.5f  |  %.5f  |'
-                % (n, a, b, c, fa, fc, en),
+                '| %3d |   %.5f   |   %.5f   |   %.5f   |  %.5f  | %.5f  |  %.5f  |' % (n, a, b, c, fa, fc, en),
             )
         print(
             '_____________________________________________________________________________________',

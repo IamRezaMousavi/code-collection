@@ -30,12 +30,7 @@ class Communication:
             value_chain = decoded_bytes.split(',')
         elif self.dummyMode:
             now = datetime.now().second + (datetime.now().microsecond / 10**6)
-            value_chain = (
-                [now]
-                + random.sample(range(300), 1)
-                + [random.getrandbits(1)]
-                + random.sample(range(20), 8)
-            )
+            value_chain = [now] + random.sample(range(300), 1) + [random.getrandbits(1)] + random.sample(range(20), 8)
         return value_chain
 
     def isOpen(self):

@@ -70,9 +70,7 @@ print()
 
 # Creat Data List
 temp = [data['list'][i]['main']['temp'] for i in range(len(data['list']))]
-temptime = [
-    int((data['list'][i]['dt'] - data['list'][0]['dt']) / 3600) for i in range(len(data['list']))
-]
+temptime = [int((data['list'][i]['dt'] - data['list'][0]['dt']) / 3600) for i in range(len(data['list']))]
 
 # Plot Temp Data
 # plt.style.use("seaborn-dark-palette")

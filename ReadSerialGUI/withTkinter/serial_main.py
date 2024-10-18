@@ -41,9 +41,7 @@ try:
     print('Press Ctrl-C to terminate while statement')
     while True:
         if ser.in_waiting > 0:  # Wait until there is data waiting in the serial buffer
-            ss = (
-                ser.readline()
-            )  # Read data out of the buffer until a carraige return / new line is found
+            ss = ser.readline()  # Read data out of the buffer until a carraige return / new line is found
 
             if ss[0] == 170 and ss[1] == 187 and len(ss) == 25:
                 print(ss, len(ss))

@@ -26,7 +26,7 @@ from serial.tools import list_ports
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self) -> None:
         super(MainWindow, self).__init__()
         self.setWindowTitle('Flight Monitoring')
         self.setMinimumSize(1000, 580)
@@ -40,22 +40,22 @@ class MainWindow(QMainWindow):
         self.combobox.addItems(sorted(portsList))
         self.combobox.setStyleSheet(
             """QComboBox
-                                    {
-                                        background: transparent;
-                                        color: white;
-                                        border: 1px solid white;
-                                        border-radius: 5px;
-                                        padding: 1px 25px;
-                                    }
-                                    QComboBox QAbstractItemView
-                                    {
-                                        background: transparent;
-                                        color: white;
-                                        selection-background-color: darkblue;
-                                        border: 1px solid white;
-                                        border-radius: 5px;
-                                    }
-                                    """,
+                {
+                    background: transparent;
+                    color: white;
+                    border: 1px solid white;
+                    border-radius: 5px;
+                    padding: 1px 25px;
+                }
+                QComboBox QAbstractItemView
+                {
+                    background: transparent;
+                    color: white;
+                    selection-background-color: darkblue;
+                    border: 1px solid white;
+                    border-radius: 5px;
+                }
+            """,
         )
 
         startButton = QPushButton('Start')
