@@ -1,0 +1,16 @@
+altgraph==0.17.4
+et_xmlfile==2.0.0
+importlib_metadata==8.7.0
+numpy==2.0.2
+openpyxl==3.1.5
+packaging==25.0
+pandas==2.2.3
+pefile==2023.2.7
+pyinstaller==6.13.0
+pyinstaller-hooks-contrib==2025.4
+python-dateutil==2.9.0.post0
+pytz==2025.2
+pywin32-ctypes==0.2.3
+six==1.17.0
+tzdata==2025.2
+zipp==3.22.0
