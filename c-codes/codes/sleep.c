@@ -11,8 +11,8 @@ int main(int argc, const char *argv[]) {
   int n = 5;
 
   for (int i = n; i > 0; i--) {
-	printf("%d\n", i);
-	sleep(1);
+    printf("%d\n", i);
+    sleep(1);
   }
   printf("It's done\n");
 

@@ -21,7 +21,7 @@ int main() {
   printf("=============\n");
 
   foreach (table, print_key_value)
-	;
+    ;
 
   printf("=============\n");
 

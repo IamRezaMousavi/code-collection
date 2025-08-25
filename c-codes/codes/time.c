@@ -14,7 +14,7 @@ void formatTime(struct tm *);
 
 // For Time Difference
 int main(int argc, const char *argv[]) {
-  time_t     start    = time(NULL);
+  time_t start = time(NULL);
   struct tm *startPtr = localtime(&start);
   formatTime(startPtr);
   printTime(startPtr);
@@ -34,10 +34,11 @@ void clock_ticks() {
 
   int count = 100000;
   for (size_t i = 0; i < count; i++)
-	printf("%ld\n", i);
+    printf("%ld\n", i);
 
   t = clock() - t;
-  printf("No. of clicks %ld clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
+  printf("No. of clicks %ld clicks (%f seconds).\n", t,
+         ((float)t) / CLOCKS_PER_SEC);
 }
 
 void printTime(struct tm *Time) {
@@ -74,14 +75,12 @@ Specifier 	Replaced By 	Example
 %M 	Minute (00-59) 	55
 %p 	AM or PM designation 	PM
 %S 	Second (00-61) 	02
-%U 	Week number with the first Sunday as the first day of week one (00-53) 	33
-%w 	Weekday as a decimal number with Sunday as 0 (0-6) 	4
-%W 	Week number with the first Monday as the first day of week one (00-53) 	34
-%x 	Date representation 	08/19/12
-%X 	Time representation 	02:50:06
-%y 	Year, last two digits (00-99) 	01
-%Y 	Year 	2012
-%Z 	Timezone name or abbreviation 	CDT
+%U 	Week number with the first Sunday as the first day of week one (00-53)
+33 %w 	Weekday as a decimal number with Sunday as 0 (0-6) 	4 %W 	Week
+number with the first Monday as the first day of week one (00-53) 	34 %x
+Date representation 	08/19/12 %X 	Time representation 	02:50:06 %y
+Year, last two digits (00-99) 	01 %Y 	Year 	2012 %Z 	Timezone name or
+abbreviation 	CDT
 %% 	A % sign 	%
 
 */

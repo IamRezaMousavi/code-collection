@@ -1,3 +1,0 @@
-# OSName
-
-Get OS name

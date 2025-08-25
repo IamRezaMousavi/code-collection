@@ -8,7 +8,7 @@ void *print_numbers(void *vargp) {
   pthread_t myid = pthread_self();
 
   for (int i = 0; i < 100; i++)
-	printf("[%ld]: %d\n", myid, i);
+    printf("[%ld]: %d\n", myid, i);
 
   return NULL;
 }
@@ -18,10 +18,10 @@ int main() {
 
   // Let us create three threads
   for (int i = 0; i < 4; i++)
-	pthread_create(&thread_ids[i], NULL, print_numbers, NULL);
+    pthread_create(&thread_ids[i], NULL, print_numbers, NULL);
 
   for (int i = 0; i < 4; i++)
-	pthread_join(thread_ids[i], NULL);
+    pthread_join(thread_ids[i], NULL);
 
   return 0;
 }

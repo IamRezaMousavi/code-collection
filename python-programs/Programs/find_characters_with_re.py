@@ -11,13 +11,9 @@ words = 'The rain in Spain 123456 Kilo'
 x = re.findall('[a-m]', words)
 print(x)
 
-# Check If The Words Start With "The"
-x = re.findall('^The', words)
+x = re.findall('in', words)
 print(x)
 
 # Find Numbers
 x = re.findall(r'\d', words)
-print(x)
-
-x = re.findall('', words)
 print(x)

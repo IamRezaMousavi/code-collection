@@ -7,7 +7,7 @@
 #include <iostream>
 using namespace std;
 
-template<typename T> T maximum(T p1, T p2, T p3);
+template <typename T> T maximum(T p1, T p2, T p3);
 
 int main(int argc, const char *argv[]) {
   int i1 = 10, i2 = 20, i3 = 30;
@@ -17,7 +17,7 @@ int main(int argc, const char *argv[]) {
   return 0;
 }
 
-template<typename T> T maximum(T p1, T p2, T p3) {
+template <typename T> T maximum(T p1, T p2, T p3) {
   T max;
   max = (p1 > p2) ? p1 : p2;
   max = (p3 > max) ? p3 : max;

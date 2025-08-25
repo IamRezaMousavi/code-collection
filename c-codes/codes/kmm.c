@@ -19,18 +19,18 @@ int main(int argc, const char *argv[]) {
 }
 
 int kmm(int num1, int num2) {
-  int max     = (num1 > num2) ? num1 : num2;
+  int max = (num1 > num2) ? num1 : num2;
   int enother = (num1 == max) ? num2 : num1;
 
   if (max % enother == 0) {
-	return max;
+    return max;
   } else {
-	int number = max;
-	int count  = 2;
-	while (number % enother != 0) {
-	  number = max * count;
-	  count++;
-	}
-	return number;
+    int number = max;
+    int count = 2;
+    while (number % enother != 0) {
+      number = max * count;
+      count++;
+    }
+    return number;
   }
 }

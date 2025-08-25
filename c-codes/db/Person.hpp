@@ -4,12 +4,11 @@
 #include <string>
 
 class Person {
-
 private:
 public:
   Person(std::string name);
 
-  int         id;
+  int id;
   std::string name;
 };
 

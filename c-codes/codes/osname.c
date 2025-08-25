@@ -1,15 +1,10 @@
 /**
  * @Author: @IamRezaMousavi
- * @Date:   2022-05-23 23:21:09
+ * @Date:   2022-05-23 23:28:13
  * @Last Modified by:   @IamRezaMousavi
- * @Last Modified time: 2022-05-27 18:05:55
+ * @Last Modified time: 2022-05-27 18:06:04
  */
-
-#include "osname.h"
-
-#ifndef NULL
-#define NULL ((char *)0)
-#endif
+#include <stdio.h>
 
 #if defined(_WIN32)
 #define PLATFORM_NAME "windows" // Windows
@@ -18,10 +13,11 @@
 #elif defined(__CYGWIN__) && !defined(_WIN32)
 #define PLATFORM_NAME "windows" // Windows (Cygwin POSIX under Microsoft Window)
 #elif defined(__ANDROID__)
-#define PLATFORM_NAME "android" // Android (implies Linux, so it must come first)
+#define PLATFORM_NAME                                                          \
+  "android" // Android (implies Linux, so it must come first)
 #elif defined(__linux__)
-#define PLATFORM_NAME \
-	"linux" // Debian, Ubuntu, Gentoo, Fedora, openSUSE, RedHat, Centos and other
+#define PLATFORM_NAME                                                          \
+  "linux" // Debian, Ubuntu, Gentoo, Fedora, openSUSE, RedHat, Centos and other
 #elif defined(__unix__) || !defined(__APPLE__) && defined(__MACH__)
 #include <sys/param.h>
 #if defined(BSD)
@@ -43,10 +39,10 @@
 #elif defined(__sun) && defined(__SVR4)
 #define PLATFORM_NAME "solaris" // Oracle Solaris, Open Indiana
 #else
-#define PLATFORM_NAME NULL
+#define PLATFORM_NAME ""
 #endif
 
-// Return a name of platform, if determined, otherwise - an empty string
-const char *getOSName() {
-  return (PLATFORM_NAME == NULL) ? "" : PLATFORM_NAME;
+int main(int argc, const char *argv[]) {
+  puts(PLATFORM_NAME);
+  return 0;
 }

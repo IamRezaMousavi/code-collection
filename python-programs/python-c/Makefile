@@ -1,21 +1,18 @@
 ##### Toolchain #####
-CC 		=	gcc
-FILE_NAME = funcs
+CC 		=	cc
+CFLAGS := -Wall -fPIC
+LDFLAGS := -shared
 
 ifeq ($(OS),Windows_NT)
-	RM      =   del /F
+	LIB = mylib.dll
 else
-	RM      =   rm -f
+	LIB = libmylib.so
 endif
 
-##### Compiler options #####
-CFLAGS = -Wall -fPIC -shared
+all:  $(LIB)
 
-
-all:  $(FILE_NAME).dll
-
-$(FILE_NAME).dll:
-	-$(CC) $(CFLAGS) -o  $(FILE_NAME).dll .\$(FILE_NAME).c
+$(LIB): mylib.c
+	$(CC) $(CFLAGS) mylib.c -o $@ $(LDFLAGS)
 
 clean:
-	@$(RM) $(FILE_NAME).dll
+	rm -f *.so *.dll

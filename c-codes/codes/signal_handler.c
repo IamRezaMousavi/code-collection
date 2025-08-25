@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void handler_signal(int signo) {
-  printf("signal no: %d\n", signo);
+void handler_signal(int signum) {
+  printf("\nSignal num: %d\n", signum);
   printf("EXITING...\n");
   exit(EXIT_SUCCESS);
 }
@@ -11,14 +11,14 @@ void handler_signal(int signo) {
 int main() {
   // ctrl + c
   if (signal(SIGINT, handler_signal)) {
-	printf("Error while settings a signal handler\n");
-	return EXIT_FAILURE;
+    printf("Error while settings a signal handler\n");
+    return EXIT_FAILURE;
   }
   // kill -15 [pid]
   signal(SIGTERM, handler_signal);
 
   while (1) {
-	/* code */
+    /* code */
   }
 
   return 0;
