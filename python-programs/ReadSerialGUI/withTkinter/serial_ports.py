@@ -13,7 +13,7 @@ import serial
 def serial_ports():
     """List serial port names"""
     if sys.platform.startswith('win'):
-        ports = [f'COM{i+1}' for i in range(256)]
+        ports = [f'COM{i + 1}' for i in range(256)]
     elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
         ports = glob.glob('/dev/tty[A-Za-z]*')
     elif sys.platform.startswith('darwin'):

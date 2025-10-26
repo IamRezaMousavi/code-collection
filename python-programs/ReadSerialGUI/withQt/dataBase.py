@@ -12,7 +12,7 @@ class DataBase:
         self.state = False
 
     def guardar(self, data, fileName):
-        if self.state == True:
+        if self.state:
             data.append(time.asctime())
             fileName = 'data' if fileName == '' else fileName
             with open(fileName + '.csv', 'a') as f:

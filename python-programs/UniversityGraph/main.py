@@ -3,6 +3,9 @@
 # @Last Modified by:   @IamRezaMousavi
 # @Last Modified time: 2022-07-25 17:29:39
 
+import matplotlib.pyplot as plt
+import networkx as nx
+
 
 def check(pos):
     for key in pos:
@@ -14,9 +17,6 @@ def check(pos):
 
 
 def main():
-    import matplotlib.pyplot as plt
-    import networkx as nx
-
     G = nx.DiGraph()
     pos = {}
     labels = {}

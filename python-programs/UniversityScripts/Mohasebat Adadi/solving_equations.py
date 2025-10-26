@@ -1,7 +1,7 @@
 # @Author: @IamRezaMousavi
 # @Date:   2021-09-22 05:41:44
 # @Last Modified by:   @IamRezaMousavi
-# @Last Modified time: 2021-11-26 12:29:37
+# @Last Modified time: 2021-11-26 12:37:25
 
 
 class SolvingEquation:
@@ -9,6 +9,7 @@ class SolvingEquation:
         self.func = func
 
     def bisection(self, a, b, e):
+        """روش دو بخشی"""
         a, b = min(a, b), max(a, b)
         func = self.func
 
@@ -37,6 +38,7 @@ class SolvingEquation:
         return (a + b) / 2
 
     def displayBisection(self, a, b, e):
+        """نمایش راه حل روش دو بخشی"""
         a, b = min(a, b), max(a, b)
         func = self.func
 
@@ -102,6 +104,7 @@ class SolvingEquation:
         return c
 
     def fixedPoint(self, x0, k):
+        """روش تکرار نققطه ثابت"""
         func = self.func
         x = [x0]
         for i in range(1, k + 1):
@@ -109,6 +112,7 @@ class SolvingEquation:
         return x[-1]
 
     def secant(self, a, b, e):
+        """روش خط قاطع (روش وتری)"""
         from math import log10
 
         log_error = abs(int(log10(e)))
@@ -130,6 +134,7 @@ class SolvingEquation:
         return x[-1]
 
     def falsePosition(self, a, b, e):
+        """روش نابه جایی"""
         f = self.func
         formole = lambda a, b: (b * f(a) - a * f(b)) / (f(a) - f(b))
         n = 0

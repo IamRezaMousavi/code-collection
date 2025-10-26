@@ -1,3 +1,0 @@
-# QThreading
-
-QThreading Tutorial

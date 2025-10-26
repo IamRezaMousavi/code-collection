@@ -17,4 +17,3 @@ filtered_rows2 = new_rows[~new_rows['مدل و مشخصات فنی کالا'].st
 
 filtered_rows.to_excel('diff.xlsx')
 filtered_rows2.to_excel('diff2.xlsx')
-

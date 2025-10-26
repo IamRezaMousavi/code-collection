@@ -4,7 +4,7 @@
 """
 
 import time
-from tkinter import *
+from tkinter import Tk, Label, BOTH
 
 window = Tk()
 time1 = ''

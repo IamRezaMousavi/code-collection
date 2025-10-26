@@ -11,8 +11,6 @@ import threading
 from datetime import datetime
 from queue import Queue
 
-from human_time import human_time
-
 
 def b2h(fileSize, unit='B', unitDivisor=1024):
     for prefix in ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']:
@@ -113,7 +111,7 @@ def main():
     paths.join()
     t = datetime.now() - startTime
     print('Get', b2h(filesSize.get()))
-    print('Done in', human_time(t.seconds))
+    print('Done in', t.seconds, 's and', t.microseconds // 1000, 'ms')
 
 
 if __name__ == '__main__':
