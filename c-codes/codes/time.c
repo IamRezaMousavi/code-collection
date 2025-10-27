@@ -1,8 +1,8 @@
 /**
  * @Author: S.Reza Mousavi
  * @Date:   2021-12-23 18:32:29
- * @Last Modified by:   S.Reza Mousavi
- * @Last Modified time: 2021-12-30 22:33:49
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-10-28 02:32:29
  */
 #include <stdio.h>
 #include <time.h>
@@ -60,7 +60,6 @@ void formatTime(struct tm *time) {
 }
 
 /*
-
 Specifier 	Replaced By 	Example
 %a 	Abbreviated weekday name 	Sun
 %A 	Full weekday name 	Sunday
@@ -75,12 +74,13 @@ Specifier 	Replaced By 	Example
 %M 	Minute (00-59) 	55
 %p 	AM or PM designation 	PM
 %S 	Second (00-61) 	02
-%U 	Week number with the first Sunday as the first day of week one (00-53)
-33 %w 	Weekday as a decimal number with Sunday as 0 (0-6) 	4 %W 	Week
-number with the first Monday as the first day of week one (00-53) 	34 %x
-Date representation 	08/19/12 %X 	Time representation 	02:50:06 %y
-Year, last two digits (00-99) 	01 %Y 	Year 	2012 %Z 	Timezone name or
-abbreviation 	CDT
+%U 	Week number with the first Sunday as the first day of week one (00-53) 33
+%w 	Weekday as a decimal number with Sunday as 0 (0-6) 	4
+%W 	Week number with the first Monday as the first day of week one (00-53) 	34
+%x 	Date representation 	08/19/12
+%X 	Time representation 	02:50:06
+%y 	Year, last two digits (00-99) 	01
+%Y 	Year 	2012
+%Z 	Timezone name or abbreviation 	CDT
 %% 	A % sign 	%
-
 */

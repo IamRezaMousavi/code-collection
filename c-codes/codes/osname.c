@@ -1,8 +1,8 @@
 /**
  * @Author: @IamRezaMousavi
  * @Date:   2022-05-23 23:28:13
- * @Last Modified by:   @IamRezaMousavi
- * @Last Modified time: 2022-05-27 18:06:04
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-10-28 00:55:42
  */
 #include <stdio.h>
 
@@ -13,11 +13,9 @@
 #elif defined(__CYGWIN__) && !defined(_WIN32)
 #define PLATFORM_NAME "windows" // Windows (Cygwin POSIX under Microsoft Window)
 #elif defined(__ANDROID__)
-#define PLATFORM_NAME                                                          \
-  "android" // Android (implies Linux, so it must come first)
+#define PLATFORM_NAME "android" // Android (implies Linux, so it must come first)
 #elif defined(__linux__)
-#define PLATFORM_NAME                                                          \
-  "linux" // Debian, Ubuntu, Gentoo, Fedora, openSUSE, RedHat, Centos and other
+#define PLATFORM_NAME "linux" // Debian, Ubuntu, Fedora, RedHat and other
 #elif defined(__unix__) || !defined(__APPLE__) && defined(__MACH__)
 #include <sys/param.h>
 #if defined(BSD)

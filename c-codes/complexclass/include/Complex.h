@@ -1,11 +1,12 @@
 /**
  * @Author: @IamRezaMousavi
  * @Date:   2021-12-04 18:51:17
- * @Last Modified by:   S.Reza Mousavi
- * @Last Modified time: 2022-02-03 01:42:09
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-10-28 01:17:14
  */
 #ifndef __COMPLEX_H__
 #define __COMPLEX_H__
+
 #include <iostream>
 
 class Complex {
@@ -40,7 +41,7 @@ public:
   friend std::istream &operator>>(std::istream &input, Complex &number);
 
   friend Complex pow(const Complex base, const double power);
-  friend Complex sqrt(const Complex base, const double power = 2);
+  friend Complex sqrt(const Complex base, const double power);
   friend Complex exp(const Complex number);
   friend Complex log(const Complex number);
   friend Complex log10(const Complex number);

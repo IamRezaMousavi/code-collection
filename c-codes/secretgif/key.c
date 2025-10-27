@@ -1,23 +1,24 @@
 /**
  * @Author: @IamRezaMousavi
  * @Date:   2022-03-15 03:11:49
- * @Last Modified by:   @IamRezaMousavi
- * @Last Modified time: 2022-03-15 05:10:18
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-10-28 01:30:32
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 void checkFile(const char *fileName);
-long int getFileSize(const char *fileName);
+size_t getFileSize(const char *fileName);
 
 int main(int argc, const char *argv[]) {
   if (argc != 2) {
-    printf("\n\nUsage Error: key [FileName.Extension]");
+    printf("\n\nUsage Error: key <FileName>");
     exit(1);
   }
 
   checkFile(argv[1]);
-  long int size = getFileSize(argv[1]);
+  size_t size = getFileSize(argv[1]);
   printf("File Size: %.2f kB\n", (float)size / 1024);
   // printf("File Size: %ld B\n", size);
 
@@ -25,7 +26,7 @@ int main(int argc, const char *argv[]) {
   file = fopen(argv[1], "rb");
 
   char *data = (char *)malloc(size);
-  long int index = 0;
+  size_t index = 0;
   while (!feof(file))
     data[index++] = fgetc(file);
   fclose(file);
@@ -53,17 +54,17 @@ void checkFile(const char *fileName) {
   fclose(filePtr);
 }
 
-long int getFileSize(const char *fileName) {
+size_t getFileSize(const char *fileName) {
   // opening the file in read mode
-  FILE *fp = fopen(fileName, "r");
+  FILE *fp = fopen(fileName, "rb");
 
   fseek(fp, 0L, SEEK_END);
 
   // calculating the size of the file
-  long int res = ftell(fp);
+  long size = ftell(fp);
 
   // closing the file
   fclose(fp);
 
-  return res;
+  return (size < 0) ? 0 : (size_t)size;
 }

@@ -1,11 +1,11 @@
 /**
  * @Author: @IamRezaMousavi
  * @Date:   2021-12-04 18:54:41
- * @Last Modified by:   IamRezaMousavi
- * @Last Modified time: 2023-06-13 22:33:27
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-10-28 01:17:34
  */
 
-#include "../include/Complex.h"
+#include "Complex.h"
 
 #include <cmath>
 #include <iostream>
@@ -162,7 +162,7 @@ Complex pow(const Complex base, const double power) {
   return fromPolar(radial, angular);
 }
 
-Complex sqrt(const Complex base, const double power) {
+Complex sqrt(const Complex base, const double power = 2) {
   return pow(base, 1 / power);
 }
 

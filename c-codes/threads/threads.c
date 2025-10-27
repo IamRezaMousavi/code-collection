@@ -1,3 +1,9 @@
+/**
+ * @Author: Reza Mousavi
+ * @Date:   2025-08-25 01:52:52
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-10-28 01:32:35
+ */
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,40 +1,90 @@
-AVR_GCC_PATH = ..\avr8-gnu\bin
-
-CC = $(AVR_GCC_PATH)\avr-gcc.exe
-OBJCOPY = $(AVR_GCC_PATH)\avr-objcopy.exe
-SIZE = $(AVR_GCC_PATH)\avr-size.exe
-REMOVE = del
+CC = avr-gcc
+OBJCOPY = avr-objcopy
+SIZE = avr-size
+NM = avr-nm
+AVRDUDE = avrdude
+REMOVE = rm -f
 
 MCU = atmega16
-F_CPU = 
+F_CPU = 1000000
+
+LFUSE = 0x9f
+HFUSE = 0xd1
+
+TARGET = firmware
+#SRC = main.c lcd.c twi.c
+SRC = main.c
+OBJ = $(SRC:.c=.o)
+LST = $(SRC:.c=.lst)
 
 FORMAT = ihex
 
-INCLUDE = .
-OPTLEVEL = 
-STD = 
+OPTLEVEL = s
 
+CDEFS = 
 
-CFLAGS = -mmcu=$(MCU)
-ifneq ($(F_CPU), )
-	CFLAGS += -DF_CPU=$(F_CPU)UL
-endif
+CFLAGS = -DF_CPU=$(F_CPU)UL
+CFLAGS += $(CDEFS)
 CFLAGS += -O$(OPTLEVEL)
-CFLAGS += -Wall
-CFLAGS += -I$(INCLUDE)
-ifneq ($(STD), )
-	CFLAGS += -std=$(STD)
-endif
+CFLAGS += -mmcu=$(MCU)
+CFLAGS += -std=gnu11
+CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CFLAGS += -ffunction-sections -fdata-sections
+CFLAGS += -Wall -Wstrict-prototypes
+CFLAGS += -Wa,-adhlns=$(<:.c=.lst)
 
-all: $(CC) $(SRC).c
-	@$(CC) $(CFLAGS) $(SRC).c -o .$(SRC).elf
-	@$(OBJCOPY) -O $(FORMAT) -j .text -j .data .\.$(SRC).elf $(SRC).hex
-	@$(REMOVE) .\.$(SRC).elf
+LDFLAGS = -Wl,--gc-sections
+LDFLAGS += -Wl,--print-gc-sections
 
-size: $(SIZE) $(CC) $(SRC).c
-	@$(CC) $(CFLAGS) $(SRC).c -o .$(SRC).elf
-	@$(SIZE) -C --mcu=$(MCU) .$(SRC).elf
-	@$(REMOVE) .$(SRC).elf
+AVRDUDE_MCU = atmega16
+AVRDUDE_PROGRAMMER = avrispmkII
+AVRDUDE_SPEED = -B 1MHz
+
+AVRDUDE_FLAGS = -p $(AVRDUDE_MCU)
+AVRDUDE_FLAGS += -c $(AVRDUDE_PROGRAMMER)
+AVRDUDE_FLAGS += $(AVRDUDE_SPEED)
+
+MSG_LINKING = Linking:
+MSG_COMPILING = Compiling:
+MSG_FLASH = Preparing HEX file:
+
+all: gccversion $(TARGET).elf $(TARGET).hex size
+
+.SECONDARY: $(TARGET).elf
+.PRECIOUS: $(OBJ)
+
+%.hex: %.elf
+	@echo
+	@echo $(MSG_FLASH) $@
+	$(OBJCOPY) -O $(FORMAT) -j .text -j .data $< $@
+
+%.elf: $(OBJ)
+	@echo
+	@echo $(MSG_LINKING) $@
+	$(CC) -mmcu=$(MCU) $(LDFLAGS) $^ --output $(@F)
+
+%.o : %.c
+	@echo $(MSG_COMPILING) $<
+	$(CC) $(CFLAGS) -c $< -o $(@F)
+
+gccversion:
+	@$(CC) --version
+
+size: $(TARGET).elf
+	@echo
+	$(SIZE) -C --mcu=$(MCU) $(TARGET).elf
+
+analyze: $(TARGET).elf
+	$(NM) -S --size-sort -t decimal $(TARGET).elf
+
+isp: $(TARGET).hex
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U flash:w:$(TARGET).hex
+
+fuses:
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U lfuse:w:$(LFUSE):m -U hfuse:w:$(HFUSE):m
+
+release: fuses isp
 
 clean:
-	@$(REMOVE) .\$(SRC).hex
+	$(REMOVE) $(TARGET).hex $(TARGET).elf $(OBJ) $(LST) *~
+

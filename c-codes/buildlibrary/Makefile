@@ -1,39 +1,26 @@
-# Variables
 CC = gcc
 CFLAGS = -Wall -Iinclude -fPIC
-SRC_DIR = src
-LIB_DIR = lib
-LIB_NAME = print
 
-STATIC_LIB = $(LIB_DIR)/lib$(LIB_NAME).a
-SHARED_LIB = $(LIB_DIR)/lib$(LIB_NAME).so
+LIBNAME = print
+SRC = src/print.c
+OBJ = $(patsubst src/%.c,%.o,$(SRC))
 
-# Default Target
-all: build_static build_dynamic
+all: lib$(LIBNAME).a lib$(LIBNAME).so main_static main_dynamic
 
-$(LIB_DIR):
-	mkdir -p $(LIB_DIR)
-
-$(LIB_DIR)/$(LIB_NAME).o: $(SRC_DIR)/$(LIB_NAME).c | $(LIB_DIR)
+$(OBJ): $(SRC)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-static: $(STATIC_LIB)
+lib$(LIBNAME).a: $(OBJ)
+	ar rcs lib$(LIBNAME).a $(OBJ)
 
-$(STATIC_LIB): $(LIB_DIR)/$(LIB_NAME).o
-	ar rcs $@ $^
+lib$(LIBNAME).so: $(OBJ)
+	$(CC) -shared -o lib$(LIBNAME).so $(OBJ)
 
-dynamic: $(SHARED_LIB)
+main_static: main.c lib$(LIBNAME).a
+	$(CC) -Iinclude main.c lib$(LIBNAME).a -o main_static
 
-$(SHARED_LIB): $(LIB_DIR)/$(LIB_NAME).o
-	$(CC) -shared -o $@ $^
-
-build_static: main.c static
-	$(CC) $(CFLAGS) -o main_static main.c $(STATIC_LIB) --static
-
-build_dynamic: main.c dynamic
-	$(CC) $(CFLAGS) -o main_dynamic main.c -L$(LIB_DIR) -l$(LIB_NAME)
+main_dynamic: main.c lib$(LIBNAME).so
+	$(CC) -Iinclude main.c -L. -l$(LIBNAME) -Wl,--enable-new-dtags -Wl,-rpath=. -o main_dynamic
 
 clean:
-	rm -f $(LIB_DIR)/* main_static main_dynamic
-
-.PHONY: all static dynamic build_static build_dynamic clean
+	rm -f *.o *.a *.so main_static main_dynamic
