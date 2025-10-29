@@ -1,10 +1,9 @@
 #include <curl/curl.h>
-#include <nlohmann/json.hpp>
 
 #include <iostream>
+#include <nlohmann/json.hpp>
 
-static size_t WriteCallback(void *contents, size_t size, size_t nmemb,
-                            void *userp) {
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
   ((std::string *)userp)->append((char *)contents, size * nmemb);
   return size * nmemb;
 }
@@ -23,8 +22,7 @@ std::string http_get(const std::string &url) {
 
     res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
-      std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res)
-                << std::endl;
+      std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
       readBuffer = ""; // if got error, return empty string
     }
     curl_easy_cleanup(curl);
@@ -34,7 +32,7 @@ std::string http_get(const std::string &url) {
   return readBuffer;
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, const char *argv[]) {
   std::string url_base = "http://api.openweathermap.org/data/2.5/weather?q=";
   std::string cityname = "London";
   std::string API_KEY = "58339b029b4279319dfd339d5f21d532";

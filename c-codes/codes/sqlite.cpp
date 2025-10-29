@@ -1,7 +1,44 @@
-#include "PersonDb.hpp"
+/**
+ * @Author: Reza Mousavi
+ * @Date:   2025-08-25 01:39:27
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-10-29 21:32:49
+ */
+#include <sqlite3.h>
 
-#include <cstring>
 #include <iostream>
+#include <vector>
+#include <string>
+#include <cstring>
+
+class Person {
+private:
+public:
+  Person(std::string name);
+
+  int id;
+  std::string name;
+};
+
+Person::Person(std::string name) {
+  this->name = name;
+}
+
+class PersonDb {
+private:
+  sqlite3 *DB;
+  int ret;
+  char *errorMessage;
+
+public:
+  PersonDb(std::string filename);
+  ~PersonDb();
+
+  std::vector<Person> getPersons();
+  int insert(Person person);
+  void update(Person person);
+  void del(int personId);
+};
 
 PersonDb::PersonDb(std::string filename) {
   ret = sqlite3_open(filename.c_str(), &DB);
@@ -22,7 +59,9 @@ PersonDb::PersonDb(std::string filename) {
   }
 }
 
-PersonDb::~PersonDb() { sqlite3_close(DB); }
+PersonDb::~PersonDb() {
+  sqlite3_close(DB);
+}
 
 static int callback(void *data, int argc, char **argv, char **azColName) {
   std::vector<Person> *persons = (std::vector<Person> *)data;
@@ -50,8 +89,7 @@ std::vector<Person> PersonDb::getPersons() {
 }
 
 int PersonDb::insert(Person person) {
-  std::string sql =
-      "INSERT INTO person VALUES (NULL, \"" + person.name + "\");";
+  std::string sql = "INSERT INTO person VALUES (NULL, \"" + person.name + "\");";
   ret = sqlite3_exec(DB, sql.c_str(), NULL, 0, &errorMessage);
   if (ret != SQLITE_OK) {
     std::cerr << "Error insert to DB" << sqlite3_errmsg(DB) << std::endl;
@@ -63,8 +101,7 @@ int PersonDb::insert(Person person) {
 }
 
 void PersonDb::update(Person person) {
-  std::string sql = "UPDATE person SET name = \"" + person.name +
-                    "\" WHERE id = " + std::to_string(person.id) + ";";
+  std::string sql = "UPDATE person SET name = \"" + person.name + "\" WHERE id = " + std::to_string(person.id) + ";";
   ret = sqlite3_exec(DB, sql.c_str(), NULL, 0, &errorMessage);
   if (ret != SQLITE_OK) {
     std::cerr << "Error Update DB" << std::endl;
@@ -74,12 +111,46 @@ void PersonDb::update(Person person) {
 }
 
 void PersonDb::del(int personId) {
-  std::string sql =
-      "DELETE FROM person WHERE id = " + std::to_string(personId) + ";";
+  std::string sql = "DELETE FROM person WHERE id = " + std::to_string(personId) + ";";
   ret = sqlite3_exec(DB, sql.c_str(), NULL, 0, &errorMessage);
   if (ret != SQLITE_OK) {
     std::cerr << "Error Delete from DB" << std::endl;
     std::cout << errorMessage << std::endl;
     sqlite3_free(errorMessage);
   }
+}
+
+int main(int argc, const char *argv[]) {
+  PersonDb db("person.db");
+  std::vector<Person> personArr = db.getPersons();
+  std::cout << "Persons " << std::endl;
+  for (auto p : personArr)
+    std::cout << p.id << ": " << p.name << std::endl;
+
+  Person persons[] = {
+      Person("reza"),
+      Person("ali"),
+      Person("mehdi"),
+      Person("ahmad"),
+  };
+
+  int personsSize = sizeof(persons) / sizeof(persons[0]);
+  for (int i = 0; i < personsSize; i++) {
+    persons[i].id = db.insert(persons[i]);
+    std::cout << persons[i].id << ": " << persons[i].name << std::endl;
+  }
+
+  persons[2].name = "mohammad";
+  db.update(persons[2]);
+  std::cout << persons[2].id << ": " << persons[2].name << " updated!" << std::endl;
+
+  db.del(persons[0].id);
+  std::cout << persons[0].id << " deleted!" << std::endl;
+
+  personArr = db.getPersons();
+  std::cout << "Persons: " << std::endl;
+  for (auto p : personArr)
+    std::cout << p.id << ": " << p.name << std::endl;
+
+  return 0;
 }

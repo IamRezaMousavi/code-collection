@@ -12,17 +12,16 @@ struct User {
 };
 
 class Database {
- private:
+private:
   MYSQL *conn;
 
   bool createTable() {
-    const char *query =
-        "CREATE TABLE IF NOT EXISTS users ("
-        "   id INT AUTO_INCREMENT PRIMARY KEY,"
-        "   name VARCHAR(50),"
-        "   birthday DATE,"
-        "   salary DOUBLE"
-        ")";
+    const char *query = "CREATE TABLE IF NOT EXISTS users ("
+                        "   id INT AUTO_INCREMENT PRIMARY KEY,"
+                        "   name VARCHAR(50),"
+                        "   birthday DATE,"
+                        "   salary DOUBLE"
+                        ")";
     if (mysql_query(conn, query)) {
       std::cerr << "Error creating table: " << mysql_error(conn) << std::endl;
       return false;
@@ -30,9 +29,8 @@ class Database {
     return true;
   }
 
- public:
-  Database(const std::string &host, const std::string &user,
-           const std::string &password, const std::string &dbname,
+public:
+  Database(const std::string &host, const std::string &user, const std::string &password, const std::string &dbname,
            unsigned int port = 3306) {
     conn = mysql_init(nullptr);
     if (!conn) {
@@ -40,10 +38,8 @@ class Database {
       exit(EXIT_FAILURE);
     }
 
-    if (!mysql_real_connect(conn, host.c_str(), user.c_str(), password.c_str(),
-                            dbname.c_str(), port, nullptr, 0)) {
-      std::cerr << "Database connection failed: " << mysql_error(conn)
-                << std::endl;
+    if (!mysql_real_connect(conn, host.c_str(), user.c_str(), password.c_str(), dbname.c_str(), port, nullptr, 0)) {
+      std::cerr << "Database connection failed: " << mysql_error(conn) << std::endl;
       mysql_close(conn);
       exit(EXIT_FAILURE);
     }
@@ -58,15 +54,13 @@ class Database {
 
     const char *query = "SELECT id, name, birthday, salary FROM users";
     if (mysql_query(conn, query)) {
-      std::cerr << "Error while selecting data: " << mysql_error(conn)
-                << std::endl;
+      std::cerr << "Error while selecting data: " << mysql_error(conn) << std::endl;
       return users;
     }
 
     MYSQL_RES *res = mysql_store_result(conn);
     if (!res) {
-      std::cerr << "Error getting users result: " << mysql_error(conn)
-                << std::endl;
+      std::cerr << "Error getting users result: " << mysql_error(conn) << std::endl;
       return users;
     }
 

@@ -19,8 +19,7 @@ int main(int argc, const char *argv[]) {
 
     cout << "Result: " << (float)numerator / (float)denominator;
   } catch (int errorNumber) {
-    cout << "Division by zero" << endl
-         << "Error number is " << errorNumber << endl;
+    cout << "Division by zero" << endl << "Error number is " << errorNumber << endl;
   }
 
   return 0;

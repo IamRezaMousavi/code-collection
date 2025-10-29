@@ -3,8 +3,7 @@
 #include <string>
 #include <vector>
 
-std::vector<std::string> findall(const std::string &pattern,
-                                 const std::string &text) {
+std::vector<std::string> findall(const std::string &pattern, const std::string &text) {
   std::regex re(pattern);
   std::sregex_iterator begin(text.begin(), text.end(), re);
   std::sregex_iterator end;

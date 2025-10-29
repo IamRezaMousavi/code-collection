@@ -17,15 +17,14 @@ std::pair<int, int> count_words(const std::string &line) {
   std::sregex_iterator end;
   int count = std::distance(begin, end);
 
-  std::sregex_iterator begin_space(line.begin(), line.end(),
-                                   kalan_space_pattern);
+  std::sregex_iterator begin_space(line.begin(), line.end(), kalan_space_pattern);
   std::sregex_iterator end_space;
   int count_space = std::distance(begin_space, end_space);
 
   return std::make_pair(count, count_space);
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, const char *argv[]) {
   std::string line;
   std::getline(std::cin, line);
 

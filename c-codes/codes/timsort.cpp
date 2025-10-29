@@ -86,8 +86,7 @@ void timSort(int array[], int arraySize) {
       if (middle >= arraySize)
         break;
 
-      int end =
-          (start + 2 * RUNsize < arraySize) ? start + 2 * RUNsize : arraySize;
+      int end = (start + 2 * RUNsize < arraySize) ? start + 2 * RUNsize : arraySize;
       merge(array, start, middle, end);
 
       cout << "After Merge " << start << " in RUNsize " << RUNsize << ": ";

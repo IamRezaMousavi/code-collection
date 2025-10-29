@@ -21,13 +21,12 @@ void displayStudent(Student std) {
   printf("       GPA: %.2f\n", std.gpa);
 }
 
-int func() { return 20; }
+int func() {
+  return 20;
+}
 
 Student studentConstructor() {
-  Student c = {.id = 9710,
-               .first_name = "Reza",
-               .last_name = "Mousavi",
-               .someFunction = &func};
+  Student c = {.id = 9710, .first_name = "Reza", .last_name = "Mousavi", .someFunction = &func};
   return c;
 }
 

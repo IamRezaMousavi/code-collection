@@ -7,7 +7,10 @@
 #include <conio.h>
 #include <stdio.h>
 
-typedef enum bool { FALSE = 0, TRUE = 1 } bool;
+typedef enum bool {
+  FALSE = 0,
+  TRUE = 1
+} bool;
 
 typedef enum months {
   FAR = 1,
@@ -25,9 +28,8 @@ typedef enum months {
 } Month;
 
 int main(int argc, const char *argv[]) {
-  char *Month_name[] = {"",       "Farvardin", "Ordibehesht", "Khordad", "Tir",
-                        "Mordad", "Shahrivar", "Mehr",        "Aban",    "Azar",
-                        "Day",    "Bahman",    "Esfand"};
+  char *Month_name[] = {"",     "Farvardin", "Ordibehesht", "Khordad", "Tir",    "Mordad", "Shahrivar",
+                        "Mehr", "Aban",      "Azar",        "Day",     "Bahman", "Esfand"};
 
   for (Month m = FAR; m <= ESF; m++)
     printf("%3d %s\n", m, Month_name[m]);

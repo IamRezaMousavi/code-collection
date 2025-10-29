@@ -37,8 +37,7 @@ void clock_ticks() {
     printf("%ld\n", i);
 
   t = clock() - t;
-  printf("No. of clicks %ld clicks (%f seconds).\n", t,
-         ((float)t) / CLOCKS_PER_SEC);
+  printf("No. of clicks %ld clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
 }
 
 void printTime(struct tm *Time) {

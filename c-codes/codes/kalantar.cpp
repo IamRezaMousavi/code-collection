@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-int main(int argc, char const *argv[]) {
+int main(int argc, const char *argv[]) {
   std::string line;
   std::getline(std::cin, line);
 

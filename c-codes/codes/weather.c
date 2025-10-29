@@ -10,8 +10,7 @@ struct MemoryStruct {
   size_t size;
 };
 
-static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
-                                  void *userp) {
+static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
   size_t realsize = size * nmemb;
   struct MemoryStruct *mem = (struct MemoryStruct *)userp;
 
@@ -46,8 +45,7 @@ char *http_get(const char *url) {
 
     res = curl_easy_perform(curl_handle);
     if (res != CURLE_OK) {
-      fprintf(stderr, "curl_easy_perform() failed: %s\n",
-              curl_easy_strerror(res));
+      fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
       free(chunk.memory);
       chunk.memory = NULL;
     }
@@ -63,9 +61,7 @@ int main() {
   const char *cityname = "London";
   const char *API_KEY = "58339b029b4279319dfd339d5f21d532";
   char url[512];
-  snprintf(url, sizeof(url),
-           "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s",
-           cityname, API_KEY);
+  snprintf(url, sizeof(url), "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", cityname, API_KEY);
 
   char *response = http_get(url);
   if (response == NULL) {

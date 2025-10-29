@@ -4,9 +4,9 @@
  * @Last Modified by:   Reza Mousavi
  * @Last Modified time: 2025-10-28 01:30:32
  */
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 
 void checkFile(const char *fileName);
 size_t getFileSize(const char *fileName);

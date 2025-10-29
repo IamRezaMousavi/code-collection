@@ -19,7 +19,7 @@ bool is_prime(int num) {
   return true;
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, const char *argv[]) {
   int number;
   std::cin >> number;
 
