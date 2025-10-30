@@ -2,52 +2,154 @@
  * @Author: Reza Mousavi
  * @Date:   2025-10-29 01:50:59
  * @Last Modified by:   Reza Mousavi
- * @Last Modified time: 2025-10-29 02:12:14
+ * @Last Modified time: 2025-10-30 05:19:11
  */
 #include <openssl/evp.h>
+#include <openssl/rand.h>
 
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <vector>
+
+#define SHA3_256_LEN 32
+#define GCM_IV_LEN 12
+#define GCM_TAG_LEN 16
+
+template <typename T>
+std::ostream &operator<<(std::ostream &os, const std::vector<T> &vec) {
+  os << "[";
+  for (size_t i = 0; i < vec.size(); i++) {
+    os << vec[i];
+    if (i + 1 < vec.size())
+      os << ", ";
+  }
+  os << "]";
+  return os;
+}
+
+std::vector<uint8_t> sha3_256(const std::string &key) {
+  std::vector<uint8_t> digest(32);
+  EVP_MD_CTX *ctx = EVP_MD_CTX_new();
+  EVP_DigestInit(ctx, EVP_sha3_256());
+  EVP_DigestUpdate(ctx, key.data(), key.size());
+  EVP_DigestFinal(ctx, digest.data(), nullptr);
+  EVP_MD_CTX_free(ctx);
+  return digest;
+}
+
+bool encrypt_file_gcm(const std::string &in_filename, const std::string &out_filename,
+                      const std::vector<uint8_t> &key) {
+  std::ifstream infile(in_filename, std::ios::binary);
+  std::ofstream outfile(out_filename, std::ios::binary);
+  if (!infile || !outfile) {
+    return false;
+  }
+
+  std::vector<uint8_t> ciphertext, iv, tag;
+  iv.assign(GCM_IV_LEN, 1);
+  RAND_bytes(iv.data(), iv.size());
+  outfile.write(reinterpret_cast<const char *>(iv.data()), iv.size());
+
+  EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+  EVP_EncryptInit(ctx, EVP_aes_256_gcm(), key.data(), iv.data());
+
+  std::vector<uint8_t> inbuf(4096);
+  std::vector<uint8_t> outbuf(4096 + 1024);
+  int outlen;
+
+  while (infile.good()) {
+    infile.read(reinterpret_cast<char *>(inbuf.data()), inbuf.size());
+    auto bytes_read = infile.gcount();
+    if (bytes_read <= 0) {
+      break;
+    }
+
+    EVP_EncryptUpdate(ctx, outbuf.data(), &outlen, inbuf.data(), bytes_read);
+    outfile.write(reinterpret_cast<char *>(outbuf.data()), outlen);
+  }
+
+  EVP_EncryptFinal(ctx, outbuf.data(), &outlen);
+  outfile.write(reinterpret_cast<char *>(outbuf.data()), outlen);
+
+  tag.assign(GCM_TAG_LEN, 1);
+  EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_GCM_GET_TAG, tag.size(), tag.data());
+  outfile.write(reinterpret_cast<const char *>(tag.data()), tag.size());
+
+  EVP_CIPHER_CTX_free(ctx);
+  return true;
+}
+
+auto decrypt_file_gcm(const std::string &in_filename, const std::string &out_filename,
+                      const std::vector<uint8_t> &key) {
+  std::ifstream infile(in_filename, std::ios::binary);
+  std::ofstream outfile(out_filename, std::ios::binary);
+  if (!infile || !outfile) {
+    return false;
+  }
+
+  infile.seekg(0, std::ios::end);
+  auto totallen = infile.tellg();
+  if (totallen < GCM_IV_LEN + GCM_TAG_LEN) {
+    return false;
+  }
+
+  std::vector<uint8_t> iv(GCM_IV_LEN);
+  infile.seekg(0, std::ios::beg);
+  infile.read(reinterpret_cast<char *>(iv.data()), iv.size());
+
+  std::vector<uint8_t> tag(GCM_TAG_LEN);
+  infile.seekg(-GCM_TAG_LEN, std::ios::end);
+  auto endpos = infile.tellg();
+  infile.read(reinterpret_cast<char *>(tag.data()), tag.size());
+
+  EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+  EVP_DecryptInit(ctx, EVP_aes_256_gcm(), key.data(), iv.data());
+
+  std::vector<uint8_t> inbuf(4096);
+  std::vector<uint8_t> outbuf(4096);
+  infile.seekg(GCM_IV_LEN, std::ios::beg);
+  int len = 0;
+  while (infile.tellg() < endpos) {
+    auto current = infile.tellg();
+    std::streamsize to_read = std::min<std::streamoff>(4096, endpos - current);
+    infile.read(reinterpret_cast<char *>(inbuf.data()), to_read);
+    auto read_len = infile.gcount();
+    EVP_DecryptUpdate(ctx, outbuf.data(), &len, inbuf.data(), read_len);
+    if (len > 0) {
+      outfile.write(reinterpret_cast<char *>(outbuf.data()), len);
+    }
+  }
+
+  EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_GCM_SET_TAG, tag.size(), (void *)tag.data());
+  EVP_DecryptFinal(ctx, outbuf.data(), &len);
+  outfile.write(reinterpret_cast<char *>(outbuf.data()), len);
+
+  EVP_CIPHER_CTX_free(ctx);
+  return true;
+}
 
 int main(int argc, char const *argv[]) {
+  if (argc < 4) {
+    std::cerr << "<e|d> <infile> <outfile>\n";
+    return EXIT_FAILURE;
+  }
+
+  std::string method(argv[1]);
+  std::string infile(argv[2]), outfile(argv[3]);
   std::string input;
-  std::cout << "Enter text:";
+
+  std::cout << "Enter key:";
   std::getline(std::cin, input);
+  auto key = sha3_256(input);
 
-  EVP_MD_CTX *ctx = EVP_MD_CTX_new();
-  if (!ctx) {
-    std::cerr << "Error: failed to create EVP context.\n";
-    return EXIT_FAILURE;
+  if (method == "e") {
+    encrypt_file_gcm(infile, outfile, key);
+  } else if (method == "d") {
+    decrypt_file_gcm(infile, outfile, key);
+  } else {
+    std::cerr << "Invalid method\n";
   }
-
-  if (EVP_DigestInit(ctx, EVP_sha3_512()) != 1) {
-    std::cerr << "Error: EVP_DigestInit failed.\n";
-    EVP_MD_CTX_free(ctx);
-    return EXIT_FAILURE;
-  }
-
-  if (EVP_DigestUpdate(ctx, input.data(), input.size()) != 1) {
-    std::cerr << "Error: EVP_DigestUpdate failed.\n";
-    EVP_MD_CTX_free(ctx);
-    return EXIT_FAILURE;
-  }
-
-  unsigned char hash[EVP_MAX_MD_SIZE];
-  unsigned int hash_len = 0;
-  if (EVP_DigestFinal(ctx, hash, &hash_len) != 1) {
-    std::cerr << "Error: EVP_DigestFinal failed.\n";
-    EVP_MD_CTX_free(ctx);
-    return EXIT_FAILURE;
-  }
-
-  EVP_MD_CTX_free(ctx);
-
-  std::cout << "SHA3-512: ";
-  for (unsigned int i = 0; i < hash_len; i++) {
-    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(hash[i]);
-  }
-  std::cout << std::dec << std::endl;
-
   return EXIT_SUCCESS;
 }

@@ -6,10 +6,10 @@
  */
 #include <sqlite3.h>
 
-#include <iostream>
-#include <vector>
-#include <string>
 #include <cstring>
+#include <iostream>
+#include <string>
+#include <vector>
 
 class Person {
 private:
