@@ -3,12 +3,12 @@ CXX := g++
 CFLAGS := -Wall -Wextra -pedantic -O2
 CXXFLAGS := -Wall -Wextra -pedantic -O2 -std=c++20
 
-TARGETS := crypt mysql sqlite threadc threadcpp weather weathercpp
+TARGETS := crypt mariadb sqlite threadc threadcpp weather weathercpp
 
 crypt: crypt.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@ -lcrypto
 
-mysql: mysql.cpp
+mariadb: mariadb.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@ -lmariadb
 
 sqlite: sqlite.cpp
