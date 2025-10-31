@@ -2,11 +2,14 @@
  * @Author: Reza Mousavi
  * @Date:   2025-10-29 01:50:59
  * @Last Modified by:   Reza Mousavi
- * @Last Modified time: 2025-11-01 01:44:06
+ * @Last Modified time: 2025-11-01 02:50:47
  */
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 
+#include <getopt.h>
+
+#include <algorithm>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -117,13 +120,69 @@ auto decrypt_file_gcm(const std::string &in_filename, const std::string &out_fil
   return true;
 }
 
-int main(int argc, char const *argv[]) {
-  if (argc < 4) {
-    std::cerr << "<e|d> <infile> <outfile>\n";
-    return EXIT_FAILURE;
+struct Argument {
+  std::string command;
+  std::string input_file;
+  std::string output_file;
+};
+
+Argument arg_parse(int argc, char *argv[]) {
+  Argument args;
+
+  const char *short_opts = "hi:o:";
+  const option long_opts[] = {{"input", required_argument, nullptr, 'i'},
+                              {"output", required_argument, nullptr, 'o'},
+                              {"help", no_argument, nullptr, 'h'},
+                              {nullptr, 0, nullptr, 0}};
+
+  while (true) {
+    const auto opt = getopt_long(argc, argv, short_opts, long_opts, nullptr);
+    if (opt == -1) {
+      break;
+    }
+
+    switch (opt) {
+    case 'h':
+      // clang-format off
+      std::cout << "Usage: " << argv[0] << " <e|d> -i <input_file> -o <output_file>\n"
+                << "Options:\n"
+                << "  -i, --input   Inut file name\n"
+                << "  -o, --output  Outpt file name\n"
+                << "  -h, --help    Show this message\n";
+
+      // clang-format on
+      exit(EXIT_SUCCESS);
+
+    case 'i':
+      args.input_file = optarg;
+      break;
+
+    case 'o':
+      args.output_file = optarg;
+      break;
+
+    default:
+      break;
+    }
   }
 
-  std::string method(argv[1]), infile(argv[2]), outfile(argv[3]);
+  if (optind < argc) {
+    args.command = argv[optind];
+  } else {
+    std::cerr << "Error: Missing command.\n";
+    exit(EXIT_FAILURE);
+  }
+
+  if (args.input_file.empty() || args.output_file.empty()) {
+    std::cerr << "Error: Input and output files are required.\n";
+    exit(EXIT_FAILURE);
+  }
+
+  return args;
+}
+
+int main(int argc, char *argv[]) {
+  Argument args = arg_parse(argc, argv);
 
   std::string input;
   std::cout << "Enter key:";
@@ -134,13 +193,13 @@ int main(int argc, char const *argv[]) {
     return EXIT_FAILURE;
   }
 
-  if (method == "e") {
-    if (!encrypt_file_gcm(infile, outfile, key)) {
+  if (args.command == "e") {
+    if (!encrypt_file_gcm(args.input_file, args.output_file, key)) {
       std::cout << "Error while encypt file\n";
       return EXIT_FAILURE;
     }
-  } else if (method == "d") {
-    if (!decrypt_file_gcm(infile, outfile, key)) {
+  } else if (args.command == "d") {
+    if (!decrypt_file_gcm(args.input_file, args.output_file, key)) {
       std::cout << "Error while decypt file\n";
       return EXIT_FAILURE;
     }
@@ -148,5 +207,8 @@ int main(int argc, char const *argv[]) {
     std::cerr << "Invalid method\n";
     return EXIT_FAILURE;
   }
+
+  std::fill(key.begin(), key.end(), 0);
+  key.clear();
   return EXIT_SUCCESS;
 }
