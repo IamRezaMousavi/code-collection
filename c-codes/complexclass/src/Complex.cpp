@@ -2,7 +2,7 @@
  * @Author: @IamRezaMousavi
  * @Date:   2021-12-04 18:54:41
  * @Last Modified by:   Reza Mousavi
- * @Last Modified time: 2025-11-02 22:08:53
+ * @Last Modified time: 2025-11-02 23:58:30
  */
 
 #include "Complex.hpp"
@@ -71,8 +71,11 @@ Complex Complex::operator-=(const Complex &other) {
 }
 
 Complex Complex::operator*=(const Complex &other) {
-  real = real * other.real - imaginary * other.imaginary;
-  imaginary = real * other.imaginary + imaginary * other.real;
+  double r = real * other.real - imaginary * other.imaginary;
+  double i = real * other.imaginary + imaginary * other.real;
+
+  real = r;
+  imaginary = i;
   return *this;
 }
 
@@ -159,8 +162,10 @@ Complex pow(const Complex base, const double power) {
   return Complex::fromPolar(radial, angular);
 }
 
-Complex sqrt(const Complex base, const double power = 2) {
-  return pow(base, 1 / power);
+Complex sqrt(const Complex number) {
+  double r = std::sqrt(number.radial());
+  double theta = (number.angular()) / 2.0;
+  return Complex::fromPolar(r, theta);
 }
 
 Complex exp(const Complex number) {

@@ -2,7 +2,7 @@
  * @Author: @IamRezaMousavi
  * @Date:   2021-12-04 18:51:17
  * @Last Modified by:   Reza Mousavi
- * @Last Modified time: 2025-11-02 22:09:57
+ * @Last Modified time: 2025-11-02 23:53:56
  */
 #ifndef __COMPLEX_HPP__
 #define __COMPLEX_HPP__
@@ -13,7 +13,6 @@ class Complex {
 public:
   double real, imaginary;
 
-  Complex() = default;
   Complex(const double real = 0, const double imaginary = 0);
   static Complex fromPolar(const double radial = 0, const double angular = 0);
 
@@ -52,7 +51,7 @@ public:
 namespace ComplexMath {
 
 Complex pow(const Complex base, const double power);
-Complex sqrt(const Complex base, const double power);
+Complex sqrt(const Complex number);
 Complex exp(const Complex number);
 Complex log(const Complex number);
 Complex log10(const Complex number);
