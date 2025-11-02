@@ -16,12 +16,13 @@ private:
   MYSQL *conn;
 
   bool createTable() {
-    const char *query = "CREATE TABLE IF NOT EXISTS users ("
-                        "   id INT AUTO_INCREMENT PRIMARY KEY,"
-                        "   name VARCHAR(50),"
-                        "   birthday DATE,"
-                        "   salary DOUBLE"
-                        ")";
+    const char *query =
+        "CREATE TABLE IF NOT EXISTS users ("
+        "   id INT AUTO_INCREMENT PRIMARY KEY,"
+        "   name VARCHAR(50),"
+        "   birthday DATE,"
+        "   salary DOUBLE"
+        ")";
     if (mysql_query(conn, query)) {
       std::cerr << "Error creating table: " << mysql_error(conn) << std::endl;
       return false;
@@ -30,8 +31,9 @@ private:
   }
 
 public:
-  Database(const std::string &host, const std::string &user, const std::string &password, const std::string &dbname,
-           unsigned int port = 3306) {
+  Database(
+      const std::string &host, const std::string &user, const std::string &password, const std::string &dbname,
+      unsigned int port = 3306) {
     conn = mysql_init(nullptr);
     if (!conn) {
       std::cerr << "Unable to initialize connection struct\n";
@@ -66,10 +68,11 @@ public:
 
     MYSQL_ROW row;
     while ((row = mysql_fetch_row(res))) {
-      User user = {.id = row[0] ? std::stoi(row[0]) : 0,
-                   .name = row[1] ? row[1] : "",
-                   .birthday = row[2] ? row[2] : "",
-                   .salary = row[3] ? std::stod(row[3]) : 0.0};
+      User user = {
+          .id = row[0] ? std::stoi(row[0]) : 0,
+          .name = row[1] ? row[1] : "",
+          .birthday = row[2] ? row[2] : "",
+          .salary = row[3] ? std::stod(row[3]) : 0.0};
       users.push_back(user);
     }
 

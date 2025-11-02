@@ -31,8 +31,8 @@ std::vector<uint8_t> sha3_256(const std::string &key) {
   return digest;
 }
 
-bool encrypt_file_gcm(const std::string &in_filename, const std::string &out_filename,
-                      const std::vector<uint8_t> &key) {
+bool encrypt_file_gcm(
+    const std::string &in_filename, const std::string &out_filename, const std::vector<uint8_t> &key) {
   std::ifstream infile(in_filename, std::ios::binary);
   std::ofstream outfile(out_filename, std::ios::binary);
   if (!infile || !outfile) {
@@ -71,8 +71,8 @@ bool encrypt_file_gcm(const std::string &in_filename, const std::string &out_fil
   return true;
 }
 
-auto decrypt_file_gcm(const std::string &in_filename, const std::string &out_filename,
-                      const std::vector<uint8_t> &key) {
+auto decrypt_file_gcm(
+    const std::string &in_filename, const std::string &out_filename, const std::vector<uint8_t> &key) {
   std::ifstream infile(in_filename, std::ios::binary);
   std::ofstream outfile(out_filename, std::ios::binary);
   if (!infile || !outfile) {
@@ -130,10 +130,11 @@ Argument arg_parse(int argc, char *argv[]) {
   Argument args;
 
   const char *short_opts = "hi:o:";
-  const option long_opts[] = {{"input", required_argument, nullptr, 'i'},
-                              {"output", required_argument, nullptr, 'o'},
-                              {"help", no_argument, nullptr, 'h'},
-                              {nullptr, 0, nullptr, 0}};
+  const option long_opts[] = {
+      {"input", required_argument, nullptr, 'i'},
+      {"output", required_argument, nullptr, 'o'},
+      {"help", no_argument, nullptr, 'h'},
+      {nullptr, 0, nullptr, 0}};
 
   while (true) {
     const auto opt = getopt_long(argc, argv, short_opts, long_opts, nullptr);

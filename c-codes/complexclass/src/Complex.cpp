@@ -2,25 +2,24 @@
  * @Author: @IamRezaMousavi
  * @Date:   2021-12-04 18:54:41
  * @Last Modified by:   Reza Mousavi
- * @Last Modified time: 2025-10-28 01:17:34
+ * @Last Modified time: 2025-11-02 22:08:53
  */
 
-#include "Complex.h"
+#include "Complex.hpp"
 
 #include <cmath>
 #include <iostream>
-
-using namespace std;
 
 Complex::Complex(const double real, const double imaginary) {
   this->real = real;
   this->imaginary = imaginary;
 }
 
-Complex Complex::operator()(const double real, const double imaginary) {
-  this->real = real;
-  this->imaginary = imaginary;
-  return *this;
+Complex Complex::fromPolar(const double radial, const double angular) {
+  double real = radial * std::cos(angular), imaginary = radial * std::sin(angular);
+  real = std::round(real * 100000) / 100000;
+  imaginary = std::round(imaginary * 100000) / 100000;
+  return Complex(real, imaginary);
 }
 
 // -----------------------
@@ -37,53 +36,47 @@ Complex Complex::conjugate() const {
 }
 
 // -----------------------
-Complex Complex::operator+(const Complex other) const {
+Complex Complex::operator+(const Complex &other) const {
   return Complex(real + other.real, imaginary + other.imaginary);
 }
 
-Complex Complex::operator-(const Complex other) const {
+Complex Complex::operator-(const Complex &other) const {
   return Complex(real - other.real, imaginary - other.imaginary);
 }
 
-Complex Complex::operator*(const Complex other) const {
+Complex Complex::operator*(const Complex &other) const {
   double realPart = real * other.real - imaginary * other.imaginary,
          imaginaryPart = real * other.imaginary + imaginary * other.real;
   return Complex(realPart, imaginaryPart);
 }
 
-Complex Complex::operator/(const Complex other) const {
+Complex Complex::operator/(const Complex &other) const {
   double denominator = other.real * other.real + other.imaginary * other.imaginary;
   double realNumerator = real * other.real + imaginary * other.imaginary;
   double imaginaryNumerator = imaginary * other.real - real * other.imaginary;
   return Complex(realNumerator / denominator, imaginaryNumerator / denominator);
 }
 
-Complex Complex::operator=(const Complex other) {
-  real = other.real;
-  imaginary = other.imaginary;
-  return *this;
-}
-
 // ----------------------
-Complex Complex::operator+=(const Complex other) {
+Complex Complex::operator+=(const Complex &other) {
   real = real + other.real;
   imaginary = imaginary + other.imaginary;
   return *this;
 }
 
-Complex Complex::operator-=(const Complex other) {
+Complex Complex::operator-=(const Complex &other) {
   real = real - other.real;
   imaginary = imaginary - other.imaginary;
   return *this;
 }
 
-Complex Complex::operator*=(const Complex other) {
+Complex Complex::operator*=(const Complex &other) {
   real = real * other.real - imaginary * other.imaginary;
   imaginary = real * other.imaginary + imaginary * other.real;
   return *this;
 }
 
-Complex Complex::operator/=(const Complex other) {
+Complex Complex::operator/=(const Complex &other) {
   double denominator = other.real * other.real + other.imaginary * other.imaginary;
   double realNumerator = real * other.real + imaginary * other.imaginary;
   double imaginaryNumerator = imaginary * other.real - real * other.imaginary;
@@ -94,41 +87,40 @@ Complex Complex::operator/=(const Complex other) {
 }
 
 // ---------------------------
-bool Complex::operator==(const Complex other) const {
+bool Complex::operator==(const Complex &other) const {
   return (real == other.real) && (imaginary == other.imaginary);
 }
 
-bool Complex::operator!=(const Complex other) const {
+bool Complex::operator!=(const Complex &other) const {
   return !((real == other.real) && (imaginary == other.imaginary));
 }
 
-bool Complex::operator<(const Complex other) const {
+bool Complex::operator<(const Complex &other) const {
   return (real < other.real) ? true : ((real == other.real && imaginary < other.imaginary) ? true : false);
 }
 
-bool Complex::operator>(const Complex other) const {
+bool Complex::operator>(const Complex &other) const {
   return (real > other.real) ? true : ((real == other.real && imaginary > other.imaginary) ? true : false);
 }
 
-bool Complex::operator<=(const Complex other) const {
+bool Complex::operator<=(const Complex &other) const {
   return (real <= other.real) ? true : ((real == other.real && imaginary <= other.imaginary) ? true : false);
 }
 
-bool Complex::operator>=(const Complex other) const {
+bool Complex::operator>=(const Complex &other) const {
   return (real >= other.real) ? true : ((real == other.real && imaginary >= other.imaginary) ? true : false);
 }
 
 // ---------------------------
-ostream &operator<<(ostream &output, const Complex &number) {
-
+std::ostream &operator<<(std::ostream &output, const Complex &number) {
   // for complex(0, 0)
   if (number.real == 0 && number.imaginary == 0) {
-    output << noshowpos << 0;
+    output << std::noshowpos << 0;
     return output;
   }
   // for complex(real)
   if (number.real != 0 && number.imaginary == 0) {
-    output << noshowpos << number.real;
+    output << std::noshowpos << number.real;
     return output;
   }
   // for complex(0, imaginary)
@@ -138,31 +130,33 @@ ostream &operator<<(ostream &output, const Complex &number) {
     else if (number.imaginary == -1)
       output << "-i";
     else
-      output << noshowpos << number.imaginary << "i";
+      output << std::noshowpos << number.imaginary << "i";
     return output;
   }
   // for complex(real, imaginary)
   // complex(real, 1)
   if (number.imaginary == 1) {
-    output << noshowpos << number.real << noshowpoint << "+i";
+    output << std::noshowpos << number.real << std::noshowpoint << "+i";
   } else if (number.imaginary == -1) {
     // complex(real, -1)
-    output << noshowpos << number.real << noshowpoint << "-i";
+    output << std::noshowpos << number.real << std::noshowpoint << "-i";
   } else {
-    output << noshowpos << number.real << showpos << number.imaginary << noshowpoint << "i" << noshowpos;
+    output << std::noshowpos << number.real << std::showpos << number.imaginary << std::noshowpoint << "i"
+           << std::noshowpos;
   }
   return output;
 }
 
-istream &operator>>(istream &input, Complex &number) {
+std::istream &operator>>(std::istream &input, Complex &number) {
   input >> number.real >> number.imaginary;
   return input;
 }
 
-// -----------------
+namespace ComplexMath {
+
 Complex pow(const Complex base, const double power) {
-  double radial = pow(base.radial(), power), angular = base.angular() * power;
-  return fromPolar(radial, angular);
+  double radial = std::pow(base.radial(), power), angular = base.angular() * power;
+  return Complex::fromPolar(radial, angular);
 }
 
 Complex sqrt(const Complex base, const double power = 2) {
@@ -170,11 +164,11 @@ Complex sqrt(const Complex base, const double power = 2) {
 }
 
 Complex exp(const Complex number) {
-  return fromPolar(exp(number.real), number.imaginary);
+  return Complex::fromPolar(std::exp(number.real), number.imaginary);
 }
 
 Complex log(const Complex number) {
-  return Complex(log(number.radial()), number.angular());
+  return Complex(std::log(number.radial()), number.angular());
 }
 
 Complex log10(const Complex number) {
@@ -182,12 +176,14 @@ Complex log10(const Complex number) {
 }
 
 Complex sin(const Complex number) {
-  double real = sin(number.real) * cosh(number.imaginary), imaginary = cos(number.real) * sinh(number.imaginary);
+  double real = std::sin(number.real) * std::cosh(number.imaginary),
+         imaginary = std::cos(number.real) * std::sinh(number.imaginary);
   return Complex(real, imaginary);
 }
 
 Complex cos(const Complex number) {
-  double real = cos(number.real) * cosh(number.imaginary), imaginary = -sin(number.real) * sinh(number.imaginary);
+  double real = std::cos(number.real) * std::cosh(number.imaginary),
+         imaginary = -std::sin(number.real) * std::sinh(number.imaginary);
   return Complex(real, imaginary);
 }
 
@@ -231,10 +227,4 @@ Complex csch(const Complex number) {
   return (Complex)1 / sinh(number);
 }
 
-// -----------------
-Complex fromPolar(const double radial, const double angular) {
-  double real = radial * cos(angular), imaginary = radial * sin(angular);
-  real = round(real * 100000) / 100000;
-  imaginary = round(imaginary * 100000) / 100000;
-  return Complex(real, imaginary);
-}
+} // namespace ComplexMath

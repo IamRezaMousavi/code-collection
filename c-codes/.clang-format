@@ -1,7 +1,9 @@
 BasedOnStyle:  LLVM
+AlignAfterOpenBracket: AlwaysBreak
 AllowShortBlocksOnASingleLine: Empty
 AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakBeforeMultilineStrings: true
 BreakTemplateDeclarations: Yes
 ColumnLimit:     120
 

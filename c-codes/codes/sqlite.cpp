@@ -47,9 +47,10 @@ PersonDb::PersonDb(std::string filename) {
     throw -1;
   }
 
-  std::string sql = "CREATE TABLE IF NOT EXISTS person("
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    "name TEXT NOT NULL);";
+  std::string sql =
+      "CREATE TABLE IF NOT EXISTS person("
+      "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+      "name TEXT NOT NULL);";
   ret = sqlite3_exec(DB, sql.c_str(), NULL, 0, &errorMessage);
   if (ret != SQLITE_OK) {
     std::cerr << "Error open DB" << sqlite3_errmsg(DB) << std::endl;

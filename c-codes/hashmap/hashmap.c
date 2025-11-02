@@ -1,3 +1,9 @@
+/**
+ * @Author: Reza Mousavi
+ * @Date:   2025-08-25 01:42:44
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-11-02 20:23:22
+ */
 #include "hashmap.h"
 
 #include <stdint.h>
@@ -5,13 +11,13 @@
 #include <string.h>
 
 // MurmurHash3
-uint32_t murmurhash(const char *key, uint32_t len, uint32_t seed) {
-  uint32_t c1 = 0xcc9e2d51;
-  uint32_t c2 = 0x1b873593;
-  uint32_t r1 = 15;
-  uint32_t r2 = 13;
-  uint32_t m = 5;
-  uint32_t n = 0xe6546b64;
+static uint32_t murmurhash(const char *key, uint32_t len, uint32_t seed) {
+  const uint32_t c1 = 0xcc9e2d51;
+  const uint32_t c2 = 0x1b873593;
+  const uint32_t r1 = 15;
+  const uint32_t r2 = 13;
+  const uint32_t m = 5;
+  const uint32_t n = 0xe6546b64;
 
   uint32_t hash = seed;
   const int nblocks = len / 4;
@@ -53,7 +59,7 @@ uint32_t murmurhash(const char *key, uint32_t len, uint32_t seed) {
   return hash;
 }
 
-Node *create_node(const char *key, const char *value) {
+static Node *node_create(const char *key, const char *value) {
   Node *new_node = (Node *)malloc(sizeof(Node));
   new_node->key = strdup(key);
   new_node->value = strdup(value);
@@ -61,33 +67,45 @@ Node *create_node(const char *key, const char *value) {
   return new_node;
 }
 
-HashTable *create_table() {
-  HashTable *table = (HashTable *)malloc(sizeof(HashTable));
-  for (int i = 0; i < TABLE_SIZE; i++)
-    table->buckets[i] = NULL;
-  return table;
+static void node_free(Node *node) {
+  free(node->key);
+  free(node->value);
+  free(node);
 }
 
-void set(HashTable *table, const char *key, const char *value) {
+HashMap *map_create() {
+  HashMap *hashmap = (HashMap *)malloc(sizeof(HashMap));
+  for (int i = 0; i < HASHMAP_SIZE; i++)
+    hashmap->buckets[i] = NULL;
+  return hashmap;
+}
+
+void map_set(HashMap *hashmap, const char *key, const char *value) {
   uint32_t hash = murmurhash(key, strlen(key), 0);
-  int index = hash % TABLE_SIZE;
+  int index = hash % HASHMAP_SIZE;
 
-  Node *new_node = create_node(key, value);
-
-  if (table->buckets[index] == NULL) {
-    table->buckets[index] = new_node;
-  } else {
-    new_node->next = table->buckets[index];
-    table->buckets[index] = new_node;
+  Node *current = hashmap->buckets[index];
+  while (current) {
+    if (strcmp(current->key, key) == 0) {
+      // update value
+      free(current->value);
+      current->value = strdup(value);
+      return;
+    }
+    current = current->next;
   }
+
+  Node *new_node = node_create(key, value);
+  new_node->next = hashmap->buckets[index];
+  hashmap->buckets[index] = new_node;
 }
 
-char *get(HashTable *table, const char *key) {
+char *map_get(HashMap *hashmap, const char *key) {
   uint32_t hash = murmurhash(key, strlen(key), 0);
-  int index = hash % TABLE_SIZE;
+  int index = hash % HASHMAP_SIZE;
 
-  Node *current = table->buckets[index];
-  while (current != NULL) {
+  Node *current = hashmap->buckets[index];
+  while (current) {
     if (strcmp(current->key, key) == 0)
       return current->value;
     current = current->next;
@@ -95,26 +113,47 @@ char *get(HashTable *table, const char *key) {
   return NULL;
 }
 
-void foreach (HashTable *table, void (*callback)(const char *, const char *)) {
-  for (int i = 0; i < TABLE_SIZE; i++) {
-    Node *current = table->buckets[i];
-    while (current != NULL) {
+void map_delete(HashMap *hashmap, const char *key) {
+  uint32_t hash = murmurhash(key, strlen(key), 0);
+  int index = hash % HASHMAP_SIZE;
+
+  Node *current = hashmap->buckets[index];
+  Node *prev = NULL;
+  while (current) {
+    if (strcmp(current->key, key) == 0) {
+      if (prev) {
+        prev->next = current->next;
+      } else {
+        hashmap->buckets[index] = current->next;
+      }
+
+      node_free(current);
+      return;
+    }
+
+    prev = current;
+    current = current->next;
+  }
+}
+
+void map_foreach(HashMap *hashmap, void (*callback)(const char *, const char *)) {
+  for (int i = 0; i < HASHMAP_SIZE; i++) {
+    Node *current = hashmap->buckets[i];
+    while (current) {
       callback(current->key, current->value);
       current = current->next;
     }
   }
 }
 
-void free_table(HashTable *table) {
-  for (int i = 0; i < TABLE_SIZE; i++) {
-    Node *current = table->buckets[i];
-    while (current != NULL) {
+void map_free(HashMap *hashmap) {
+  for (int i = 0; i < HASHMAP_SIZE; i++) {
+    Node *current = hashmap->buckets[i];
+    while (current) {
       Node *temp = current;
       current = current->next;
-      free(temp->key);
-      free(temp->value);
-      free(temp);
+      node_free(temp);
     }
   }
-  free(table);
+  free(hashmap);
 }
