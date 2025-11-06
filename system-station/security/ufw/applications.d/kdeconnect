@@ -1,0 +1,5 @@
+[KDEConnect]
+title=KDE Connect
+description=KDE Connect ports
+ports=1714:1764/udp|1714:1764/tcp
+

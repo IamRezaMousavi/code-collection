@@ -1,0 +1,5 @@
+[NFSServer]
+title=Network File System (NFS)
+description=NFS (Network File System) is a distributed file system protocol that allows clients to access files and directories on a remote server as if they were local to the client machine.
+ports=2049/tcp
+

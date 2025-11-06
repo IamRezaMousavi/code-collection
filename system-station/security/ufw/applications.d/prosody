@@ -1,0 +1,5 @@
+[Prosody]
+title=XMPP Server
+description=Prosody is a lightweight XMPP server written in Lua.
+ports=5222,5269,5000,5281/tcp
+

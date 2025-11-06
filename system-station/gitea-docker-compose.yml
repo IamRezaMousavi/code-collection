@@ -1,0 +1,37 @@
+## Git hosting
+
+# A source-code-hosting facility (also known as forge)
+# is a file archive and web hosting facility
+# for source code of software, documentation, web pages,
+# and other works, accessible either publicly or privately.
+# [wikipedia](https://en.wikipedia.org/wiki/Comparison_of_source-code-hosting_facilities)
+
+# - [Gitea](https://gitea.io/):
+#   Git with a cup of tea! Painless self-hosted all-in-one software development service,
+#   includes Git hosting, code review, team collaboration, package registry and CI/CD.
+#   [github](https://github.com/go-gitea/gitea) `MIT` `Go`
+#     - arch: `gitea`
+
+version: "3"
+
+networks:
+  gitea:
+    external: false
+
+services:
+  server:
+    image: docker.gitea.com/gitea:1.25.1
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    networks:
+      - gitea
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+      - "222:22"

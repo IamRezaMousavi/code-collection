@@ -1,0 +1,14 @@
+[user]
+	email = iamrezamousavi@gmail.com
+	name = Reza Mousavi
+	signingkey = B2FFE4EE31DEF11A28A509803FC58ECAFA3319E0
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+[core]
+	editor = vim
+[alias]
+	undo = reset --soft HEAD~1

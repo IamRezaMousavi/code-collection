@@ -1,0 +1,8 @@
+[window]
+dimensions = { columns = 180, lines = 40 }
+opacity = 0.95
+
+[font]
+normal = { family = "ComicShannsMono Nerd Font" }
+size = 10
+

@@ -1,0 +1,5 @@
+[RustdeskServer]
+title=Rustdesk Server
+description=Rustdesk is a remote desktop software.
+ports=21114:21119,8000/tcp|21116/udp
+

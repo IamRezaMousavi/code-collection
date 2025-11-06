@@ -1,0 +1,5 @@
+[LocalSend]
+title=LocalSend
+description=File sharing over local network
+ports=53317:53318/tcp
+

@@ -1,0 +1,48 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt autocd extendedglob notify
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/reza/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# User Config
+zstyle ':completion:*' menu select
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+alias diff='diff --color -u'
+
+alias ll='eza -lg --icons=always'
+alias tree='eza -T --icons=always'
+
+# manpager
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT='-c'
+
+export GPG_TTY=$(tty)
+
+# Install zsh-syntax-highlighting, zsh-autosuggestions
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Install pkgfile
+source /usr/share/doc/pkgfile/command-not-found.zsh
+
+if [ -d "$HOME/bin" ] ; then
+    export PATH="$HOME/bin:$PATH"
+fi
+
+eval "$(starship init zsh)"
+
+# flutter
+export PATH=$PATH:/home/reza/flutter/bin
+export CHROME_EXECUTABLE=/opt/google/chrome/chrome
+
