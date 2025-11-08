@@ -1,10 +1,9 @@
 /**
  * @Author: @IamRezaMousavi
  * @Date:   2021-07-23 00:33:53
- * @Last Modified by:   @IamRezaMousavi
- * @Last Modified time: 2021-12-13 12:43:03
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-11-08 10:28:59
  */
-#include <conio.h>
 #include <stdio.h>
 
 typedef enum bool {
@@ -28,12 +27,18 @@ typedef enum months {
 } Month;
 
 int main(int argc, const char *argv[]) {
-  char *Month_name[] = {"",     "Farvardin", "Ordibehesht", "Khordad", "Tir",    "Mordad", "Shahrivar",
-                        "Mehr", "Aban",      "Azar",        "Day",     "Bahman", "Esfand"};
+  // clang-format off
+  char *Month_name[] = {"",
+    "Farvardin", "Ordibehesht", "Khordad",
+    "Tir",       "Mordad",      "Shahrivar",
+    "Mehr",      "Aban",        "Azar",
+    "Day",       "Bahman",      "Esfand"
+  };
+  // clang-format on
 
   for (Month m = FAR; m <= ESF; m++)
     printf("%3d %s\n", m, Month_name[m]);
 
-  getch();
+  getc(stdin);
   return 0;
 }
