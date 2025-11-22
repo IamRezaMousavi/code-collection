@@ -12,41 +12,51 @@ int main(int argc, const char *argv[]) {
   std::getline(std::cin, line);
 
   std::vector<std::pair<int, int>> level_count;
-  level_count.reserve(line.size() / 5);
+
+  std::string newline;
+  newline.reserve(line.size());
+
   while (true) {
+    newline.clear();
+
     int kalan_count = 0;
     int kalan_space_count = 0;
 
     size_t i = 0;
-    size_t write = 0;
     while (i < line.size()) {
-      if (line[i] == 'k') {
-        if (line.compare(i, 5, "kalan") == 0) {
-          size_t j = i + 5;
-          if (line[j] == ' ') {
-            while (j < line.size() && line[j] == ' ')
-              j++;
+      if (line[i] == 'k' && line.compare(i, 5, "kalan") == 0) {
+        size_t j = i + 5;
 
-            if (line.compare(j, 3, "tar") == 0) {
-              kalan_space_count++;
-              i = j + 3;
-              continue;
-            }
+        if (line[j] == ' ') {
+          while (j < line.size() && line[j] == ' ')
+            j++;
 
-          } else if (line.compare(j, 3, "tar") == 0) {
-            kalan_count++;
-            i += 8;
+          if (line.compare(j, 3, "tar") == 0) {
+            kalan_space_count++;
+            i = j + 3;
             continue;
           }
+
+        } else if (line.compare(j, 3, "tar") == 0) {
+          kalan_count++;
+          i += 8;
+          continue;
         }
       }
 
-      line[write++] = line[i++];
+      size_t next_k = line.find('k', i + 1);
+      if (next_k == std::string::npos) {
+        next_k = line.size();
+      }
+      newline.append(line, i, next_k - i);
+      i = next_k;
     }
+
     if (kalan_count == 0 && kalan_space_count == 0)
       break;
-    line.resize(write);
-    level_count.emplace_back(kalan_count, kalan_space_count);
+
+    level_count.push_back({kalan_count, kalan_space_count});
+    line.swap(newline);
   }
 
   std::cout << level_count.size() << '\n';
