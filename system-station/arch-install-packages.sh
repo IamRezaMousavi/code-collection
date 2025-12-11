@@ -44,7 +44,7 @@ sudo pacman -S --noconfirm \
     bitwarden \
     freeplane \
     inkscape \
-    gnu-free-fonts ttf-opensans ttf-linux-libertine ttf-gentium-plus \
+    gnu-free-fonts ttf-opensans ttf-linux-libertine ttf-gentium-plus noto-fonts-emoji \
     ntfs-3g \
     alsa-utils alsa-plugins alsa-firmware \
     irqbalance \
@@ -73,8 +73,8 @@ yay -S --noconfirm \
     visual-studio-code-bin \
     localsend-bin \
     marktext-bin \
-    vazirmatn-fonts ttf-joypixels otf-openmoji noto-fonts-emoji \
-    ttf-mononoki ttf-monaco otf-hermit ttf-hack iranian-fonts ttf-tahoma borna-fonts iran-nastaliq-fonts
+    vazirmatn-fonts otf-openmoji \
+    borna-fonts iran-nastaliq-fonts
 
 echo "Enabling services..."
 sudo systemctl enable power-profiles-daemon.service

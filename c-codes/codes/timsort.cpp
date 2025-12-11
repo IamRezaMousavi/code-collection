@@ -1,37 +1,22 @@
 /**
  * @Author: @IamRezaMousavi
- * @Date:   2022-01-02 03:47:37
- * @Last Modified by:   @IamRezaMousavi
- * @Last Modified time: 2022-09-25 17:58:11
+ * @Date:   2021-12-16 17:18:37
+ * @Last Modified by:   Reza Mousavi
+ * @Last Modified time: 2025-12-11 16:51:12
  */
+
 #include <iostream>
+
+#include "testplusplus.hpp"
 
 using namespace std;
 const int RUN = 5;
-
-void insertionSort(int array[], int left, int right);
-void merge(int array[], int left, int middle, int right);
-void timSort(int array[], int arraySize);
-void timSort(int array[], int left, int right);
-void printArray(int array[], int arraySize);
-void printArray(int array[], int left, int right);
-
-int main(int argc, const char *argv[]) {
-  int arraySize = 23;
-  int array[arraySize];
-  for (size_t i = 0; i < arraySize; i++)
-    array[i] = arraySize - i;
-  printArray(array, arraySize);
-  timSort(array, 2, arraySize - 2);
-  printArray(array, arraySize);
-  return 0;
-}
 
 void insertionSort(int array[], int left, int right) {
   for (size_t arrayIndex = left + 1; arrayIndex < right; arrayIndex++) {
     int temp = array[arrayIndex];
     int otherIndex = arrayIndex - 1;
-    while (array[otherIndex] > temp && otherIndex >= left) {
+    while (otherIndex >= left && array[otherIndex] > temp) {
       array[otherIndex + 1] = array[otherIndex];
       otherIndex--;
     }
@@ -72,36 +57,10 @@ void merge(int array[], int left, int middle, int right) {
   }
 }
 
-void timSort(int array[], int arraySize) {
-  for (size_t i = 0; i < arraySize; i += RUN) {
-    int end = (i + RUN < arraySize) ? i + RUN : arraySize;
-    insertionSort(array, i, end);
-
-    cout << "After InsertionSort " << i << ": ";
-    printArray(array, arraySize);
-  }
-  for (size_t RUNsize = RUN; RUNsize < arraySize; RUNsize *= 2) {
-    for (size_t start = 0; start < arraySize; start += 2 * RUNsize) {
-      int middle = start + RUNsize;
-      if (middle >= arraySize)
-        break;
-
-      int end = (start + 2 * RUNsize < arraySize) ? start + 2 * RUNsize : arraySize;
-      merge(array, start, middle, end);
-
-      cout << "After Merge " << start << " in RUNsize " << RUNsize << ": ";
-      printArray(array, arraySize);
-    }
-  }
-}
-
 void timSort(int array[], int left, int right) {
   for (size_t i = left; i < right; i += RUN) {
     int end = (i + RUN < right) ? i + RUN : right;
     insertionSort(array, i, end);
-
-    cout << "After InsertionSort " << i << ": ";
-    printArray(array, left, right);
   }
   for (size_t RUNsize = RUN; RUNsize < right; RUNsize *= 2) {
     for (size_t start = left; start < right; start += 2 * RUNsize) {
@@ -111,21 +70,79 @@ void timSort(int array[], int left, int right) {
 
       int end = (start + 2 * RUNsize < right) ? start + 2 * RUNsize : right;
       merge(array, start, middle, end);
-
-      cout << "After Merge " << start << " in RUNsize " << RUNsize << ": ";
-      printArray(array, left, right);
     }
   }
 }
 
-void printArray(int array[], int arraySize) {
-  for (size_t index = 0; index < arraySize; index++)
-    cout << array[index] << " ";
-  cout << endl;
+void timSort(int array[], int arraySize) {
+  timSort(array, 0, arraySize);
 }
 
-void printArray(int array[], int left, int right) {
-  for (size_t index = left; index < right; index++)
-    cout << array[index] << " ";
-  cout << endl;
+TEST(TimsortTestHandlesSingleElement) {
+  int arr[] = {5};
+  timSort(arr, 0, 1);
+  ASSERT_EQ(arr[0], 5);
+}
+
+TEST(TimSortTestReverseArray) {
+  int arr[] = {5, 4, 3, 2, 1};
+  timSort(arr, 0, 5);
+  ASSERT_EQ(arr[0], 1);
+  ASSERT_EQ(arr[1], 2);
+  ASSERT_EQ(arr[2], 3);
+  ASSERT_EQ(arr[3], 4);
+  ASSERT_EQ(arr[4], 5);
+}
+
+TEST(TimSortTestAlreadySorted) {
+  int arr[] = {1, 2, 3, 4, 5};
+  timSort(arr, 0, 5);
+  int expected[] = {1, 2, 3, 4, 5};
+  for (int i = 0; i < 5; i++)
+    ASSERT_EQ(arr[i], expected[i]);
+}
+
+TEST(TimSortTestPartialRangeSort) {
+  int arr[] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+
+  // [2, 8)
+  timSort(arr, 2, 8);
+
+  int expectedSorted[] = {3, 4, 5, 6, 7, 8};
+  for (int i = 0; i < 6; i++)
+    ASSERT_EQ(arr[i + 2], expectedSorted[i]);
+
+  ASSERT_EQ(arr[0], 10);
+  ASSERT_EQ(arr[1], 9);
+  ASSERT_EQ(arr[8], 2);
+  ASSERT_EQ(arr[9], 1);
+}
+
+TEST(TimSortTestSmallRunSize) {
+  int arr[] = {4, 3, 2, 1};
+  timSort(arr, 0, 4);
+
+  int expected[] = {1, 2, 3, 4};
+  for (int i = 0; i < 4; i++)
+    ASSERT_EQ(arr[i], expected[i]);
+}
+
+TEST(TimSortTestMultiRunMerge) {
+  int arr[] = {7, 6, 5, 4, 3, 2, 1, 0};
+  timSort(arr, 0, 8);
+
+  for (int i = 0; i < 8; i++)
+    ASSERT_EQ(arr[i], i);
+}
+
+TEST(TimSortTestBoundaryMergeCase) {
+  int arr[] = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+  timSort(arr, 0, 10);
+
+  for (int i = 0; i < 10; i++)
+    ASSERT_EQ(arr[i], i);
+}
+
+int main() {
+  return testplusplus::runAllTests();
 }
