@@ -1,0 +1,28 @@
+Checks: [
+  '-*',
+  'clang-analyzer-*',
+  'bugprone-*',
+  'concurrency-*',
+  'performance-*',
+  'modernize-*',
+  'cert-*',
+  'cppcoreguidelines-*',
+  'portability-*',
+  'misc-*'
+]
+
+HeaderFileExtensions:
+  - ''
+  - h
+  - hh
+  - hpp
+  - hxx
+ImplementationFileExtensions:
+  - c
+  - cc
+  - cpp
+  - cxx
+HeaderFilterRegex: '.*'
+UseColor: true
+#CheckOptions:
+

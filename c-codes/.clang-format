@@ -6,6 +6,7 @@ AllowShortFunctionsOnASingleLine: Inline
 AlwaysBreakBeforeMultilineStrings: true
 BreakTemplateDeclarations: Yes
 ColumnLimit:     120
+InsertNewlineAtEOF: true
 
 IncludeBlocks:   Regroup
 IncludeCategories:
