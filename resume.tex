@@ -1,0 +1,151 @@
+%-------------------------
+% Reza Resume
+% Link: https://github.com/IamRezaMousavi
+%------------------------
+
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\renewcommand*\familydefault{\sfdefault}
+
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  top=1.8cm,
+  bottom=1in,
+  left=2.5cm,
+  right=2.5cm
+}
+
+\setcounter{secnumdepth}{0} % remove section numbering
+
+\usepackage[dvipsnames]{xcolor}
+\colorlet{icnclr}{gray}
+
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep,left=0pt..1.5em}
+\setlist[description]{itemsep=0pt}
+\setlist[enumerate]{align=left}
+
+\usepackage{titlesec}
+\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\titleformat{\section}{\color{Sepia}\large\fontseries{black}\selectfont\uppercase}{}{}{\ruleafter}[\global\RemVStrue]
+\titleformat{\subsection}{\large\fontseries{semibold}\selectfont}{}{}{\rvs}
+\titleformat{\subsubsection}{\large\fontseries{medium}\selectfont}{}{}{}
+
+\usepackage{xhfill}
+\newcommand\ruleafter[1]{#1~\xrfill[.5ex]{1pt}[gray]}
+
+\newif\ifRemVS
+\newcommand{\rvs}{
+  \ifRemVS
+  \vspace{-1.5ex}
+  \fi
+  \global\RemVSfalse
+}
+
+\usepackage[bookmarks=false]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  urlcolor=Sepia,
+  pdftitle={My Resume},
+}
+
+\usepackage[page]{totalcount}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{}
+\cfoot{\color{darkgray} Reza Mousavi Resume -- Page \thepage{} of \totalpages}
+
+\begin{document}
+
+%== HEADER ==%
+\begin{center}
+  {\Huge \textbf{Reza Mousavi}} \\[6pt]
+  \href{mailto:iamrezamousavi@gmail.com}{iamrezamousavi@gmail.com} \;|\;
+  +98 939 631 1378 \;|\;
+  \href{https://github.com/IamRezaMousavi}{github.com/IamRezaMousavi}
+\end{center}
+
+\section{Education}
+%==============
+\subsection{Khatam University $|$ {\normalfont\textit{Master of
+Science}} \hfill 2025 -- Present}
+\begin{itemize}
+  \item Computer Engineering
+  \item Major: Secure computing
+\end{itemize}
+
+\subsection{Arak University of Technology $|$
+{\normalfont\textit{Bachelor of Science}} \hfill 2018 -- 2024}
+\begin{itemize}
+  \item Electrical Engineering
+  \item Major: Electronic
+  \item GPA: 16.5 / 20 ($\approx$ 3.3 / 4.0)
+\end{itemize}
+
+\section{Experience}
+%===================
+\subsection{Software Engineer \hfill Jun 2024 -- Present}
+\subsubsection{Tabadol Amn Company}
+\begin{itemize}
+  \item Full-time software engineer
+  \item System development with modern C++20 and STL
+  \item Backend development with Python (FastAPI) and Async
+    networking with Rust (Tokio)
+  \item High-performance networking with C and DPDK on Linux
+\end{itemize}
+
+\subsection{System Administrator \hfill Sep 2022 -- Jun 2024}
+\subsubsection{Arak University of Technology}
+\begin{itemize}
+  \item Full-time system administrator
+  \item Managed internal university network systems
+\end{itemize}
+
+\section{Skills}
+%===============
+\begin{itemize}
+  \item Programming Languages: {\hfill Python, C/C++, Kotlin, Dart, Rust}
+  \item Frameworks: {\hfill Flutter, React, FastAPI, Django Rest Framework}
+  \item Tools: {\hfill Docker, Docker Compose}
+  \item Databases: {\hfill MySQL, SQLite, RoomDB}
+  \item Microcontrollers: {\hfill STM32, Atmega, Arduino, ESP8266}
+  \item OS: {\hfill Linux administration (4+ years)}
+\end{itemize}
+
+\section{Projects}
+%=================
+\subsection{Digital Lock {\normalfont $|$
+\href{https://github.com/lamRezaMousavi/digital-lock}{Link}}}
+\begin{itemize}
+  \item STM32-based lock with fingerprint, SMS, keypad, RTC, LCD
+  \item FreeRTOS for hardware management {\hfill Embedded C}
+  \item Flutter mobile client with Sqflite, Provider, Material Design
+    3 {\hfill Flutter}
+\end{itemize}
+
+\subsection{Mafia Game {\normalfont $|$
+\href{https://github.com/lamRezaMousavi/Mafia}{Link}}}
+\begin{itemize}
+  \item Android app for Mafia game management {\hfill Android}
+  \item Kotlin, MVVM, View Binding, Coroutines, Serialization, Shared
+    Preferences {\hfill Kotlin}
+\end{itemize}
+
+\subsection{Star Smart System}
+\begin{itemize}
+  \item IoT home automation system
+  \item Python server with Django Rest Framework {\hfill Python}
+  \item ESP8266 boards programmed in C++ {\hfill Arduino}
+\end{itemize}
+
+\subsection{Ghermez}
+\begin{itemize}
+  \item Rust-based Download Manager
+  \item Rusqlite, Reqwest, Tokio {\hfill Rust}
+\end{itemize}
+
+\end{document}
