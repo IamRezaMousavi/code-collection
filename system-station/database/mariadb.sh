@@ -8,7 +8,7 @@ mariadb_install() {
 }
 
 mariadb_createuser() {
-    mariadb -u root -p < db-user.sql
+    mariadb -u root -p < user.sql
 }
 
 case "$1" in

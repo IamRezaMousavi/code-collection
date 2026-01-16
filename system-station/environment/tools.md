@@ -85,11 +85,6 @@ A screencast is a digital recording of computer screen output, also known as a v
 - fastfetch: Fastfetch is a neofetch-like tool for fetching system information and displaying them in a pretty way. It is written mainly in C, with performance and customizability in mind. Currently, Linux, Android, FreeBSD, MacOS and Windows 7+ are supported. [github](https://github.com/fastfetch-cli/fastfetch) `MIT` `C`
   - arch: `fastfetch`
 
-### Terminal Multiplexer
-
-- [tmux](https://github.com/tmux/tmux/wiki): tmux is a terminal multiplexer. It lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal. [github](https://github.com/tmux/tmux) `ISC` `C`
-  - arch: `tmux`
-
 ### Version Control
 
 In software engineering, version control is a class of systems responsible for managing changes to computer programs, documents, large web sites, or other collections of information. Version control is a component of software configuration management. [wikipedia](https://en.wikipedia.org/wiki/Version_control)

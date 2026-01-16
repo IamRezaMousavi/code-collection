@@ -7,8 +7,8 @@ if ! command -v yay > /dev/null; then
     echo "yay not found. Installing yay..."
     sudo pacman -S --needed --noconfirm git base-devel
     tmpdir=$(mktemp -d)
-    git clone https://aur.archlinux.org/yay.git "$tmpdir/yay"
-    cd "$tmpdir/yay" || exit
+    git clone https://aur.archlinux.org/yay-bin.git "$tmpdir/yay-bin"
+    cd "$tmpdir/yay-bin" || exit
     makepkg -si --noconfirm
     cd - || exit
     rm -rf "$tmpdir"
@@ -18,78 +18,74 @@ fi
 
 echo "Installing core packages with pacman..."
 sudo pacman -S --noconfirm \
-    firefox git \
-    go \
-    tmux neovim \
+    firefox \
+    libreoffice-fresh \
+    git lazygit \
+    neovim tmux less \
     fastfetch onefetch \
-    linux-firmware-qlogic \
-    ufw traceroute whois \
-    nmap wireshark-qt scapy \
-    vlc fwupd \
-    p7zip unrar \
-    gnome-terminal alacritty \
-    otf-comicshanns-nerd \
+    ufw \
+    7zip zip unrar rsync \
+    alacritty \
     power-profiles-daemon \
-    zsh eza pkgfile starship bat \
-    zsh-syntax-highlighting zsh-autosuggestions \
-    samba \
-    hyperfine \
-    thunderbird \
+    eza starship bat \
+    zsh zsh-syntax-highlighting zsh-autosuggestions pkgfile \
     cups cups-pdf \
     man-db \
-    jdk-openjdk \
+    cmake cppcheck nlohmann-json spdlog tomlplusplus \
+    ipython python-numpy python-pandas ruff \
+    jdk17-openjdk \
     nodejs npm \
+    rustup \
+    go \
     mariadb \
-    libreoffice-fresh \
     bitwarden \
-    freeplane \
     inkscape \
-    gnu-free-fonts ttf-opensans ttf-linux-libertine ttf-gentium-plus noto-fonts-emoji \
+    gnu-free-fonts ttf-roboto ttf-opensans ttf-linux-libertine ttf-gentium-plus noto-fonts-emoji \
+    otf-comicshanns-nerd \
     ntfs-3g \
-    alsa-utils alsa-plugins alsa-firmware \
     irqbalance \
-    jq \
-    ruff \
-    jupyter-notebook \
     nginx \
-    obs-studio \
-    qbittorrent \
     virtualbox virtualbox-host-modules-arch virtualbox-guest-iso \
     arm-none-eabi-gcc arm-none-eabi-newlib \
     openocd \
-    arduino-ide \
-    docker \
-    chrony \
-    pacman-contrib
-
-
+    docker docker-compose \
+    pacman-contrib reflector \
+    gnome-shell-extensions \
+    wireshark-qt nmap scapy openbsd-netcat \
+    logrotate \
+    vlc vlc-plugins-all
 
 echo "Installing AUR packages with yay..."
 yay -S --noconfirm \
-    upd72020x-fw ast-firmware aic94xx-firmware wd719x-firmware \
-    tray-icons-reloaded \
-    auto-cpufreq \
     borna-fonts iran-nastaliq-fonts \
     visual-studio-code-bin \
     localsend-bin \
-    marktext-bin \
     vazirmatn-fonts otf-openmoji \
-    borna-fonts iran-nastaliq-fonts
+    bibata-cursor-theme-bin
+
+fc-cache
+
+chsh -l
+chsh -s /usr/bin/zsh
+
+sudo usermod -aG docker reza
+sudo usermod -aG wireshark reza
+sudo usermod -aG vboxusers reza
 
 echo "Enabling services..."
-sudo systemctl enable power-profiles-daemon.service
-sudo systemctl start power-profiles-daemon.service
-
-sudo systemctl enable auto-cpufreq.service
-sudo systemctl start auto-cpufreq.service
-
-sudo systemctl enable cups.socket
-sudo systemctl start cups.socket
-
-sudo systemctl enable paccache.timer
-sudo systemctl start paccache.timer
+sudo systemctl enable --now power-profiles-daemon
+sudo systemctl enable --now cups.socket
+sudo systemctl enable --now ufw
+sudo systemctl enable --now docker.socket
+sudo systemctl enable --now paccache.timer
+sudo systemctl enable --now reflector.timer
+sudo systemctl enable --now irqbalance
+sudo systemctl enable --now logrotate.timer
+sudo ufw enable
 
 echo "Updating pkgfile database..."
 sudo pkgfile --update
+
+rustup default stable
 
 echo "Installation and setup complete!"
