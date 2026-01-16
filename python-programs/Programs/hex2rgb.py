@@ -4,7 +4,7 @@
 """
 
 
-def sixteen2ten(int16):
+def sixteen2ten(int16: str) -> int:
     int16 = list(int16.upper())
     for index in range(len(int16)):
         if int16[index] == 'A':
@@ -27,7 +27,7 @@ def sixteen2ten(int16):
     return int10
 
 
-def hex2rgb(code):
+def hex2rgb(code: str) -> tuple[int, int, int]:
     code = list(code.upper())  # upper for a -> A and other
     red1 = code[0] + '0'
     red2 = code[1]

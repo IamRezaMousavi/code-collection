@@ -1,17 +1,17 @@
 // Create by @IamRezaMousavi
 
-#define red 11
-#define green 10
-#define blue 9
+#define RED 11
+#define GREEN 10
+#define BLUE 9
 
 int r, g, b;
 
 void setup() {
   Serial.begin(9600);
   
-  pinMode(red, OUTPUT);
-  pinMode(green, OUTPUT);
-  pinMode(blue, OUTPUT);
+  pinMode(RED, OUTPUT);
+  pinMode(GREEN, OUTPUT);
+  pinMode(BLUE, OUTPUT);
 }
 
 void loop() {
@@ -20,11 +20,11 @@ void loop() {
     r = Serial.parseInt();
     g = Serial.parseInt();
     b = Serial.parseInt();
-    Serial.print("Blue=");
+    Serial.print("BLUE=");
     Serial.println(b);
   }
 
-  analogWrite(red, r);
-  analogWrite(green, g);
-  analogWrite(blue, b);
+  analogWrite(RED, r);
+  analogWrite(GREEN, g);
+  analogWrite(BLUE, b);
 }

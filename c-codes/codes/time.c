@@ -2,7 +2,7 @@
  * @Author: S.Reza Mousavi
  * @Date:   2021-12-23 18:32:29
  * @Last Modified by:   Reza Mousavi
- * @Last Modified time: 2025-10-28 02:32:29
+ * @Last Modified time: 2026-01-16 06:24:26
  */
 #include <stdio.h>
 #include <time.h>
@@ -12,7 +12,6 @@ void clock_ticks();
 void printTime(struct tm *);
 void formatTime(struct tm *);
 
-// For Time Difference
 int main(int argc, const char *argv[]) {
   time_t start = time(NULL);
   struct tm *startPtr = localtime(&start);

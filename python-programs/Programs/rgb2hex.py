@@ -4,7 +4,7 @@
 """
 
 
-def ten2sixteen(number):
+def ten2sixteen(number: str) -> str:
     number = int(number)
     sixteen = ''
     while True:
