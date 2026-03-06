@@ -40,7 +40,7 @@ sudo pacman -S --noconfirm \
     mariadb \
     bitwarden \
     inkscape \
-    gnu-free-fonts ttf-roboto ttf-opensans ttf-linux-libertine ttf-gentium-plus noto-fonts-emoji \
+    gnu-free-fonts ttf-roboto ttf-opensans ttf-linux-libertine ttf-gentium-plus ttf-scheherazade-new noto-fonts noto-fonts-emoji \
     otf-comicshanns-nerd \
     ntfs-3g \
     irqbalance \
