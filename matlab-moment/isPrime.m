@@ -1,19 +1,29 @@
 %
 % @Author: S.Reza Mousavi
 % @Date:   2021-12-23 18:32:56
-% @Last Modified by:   S.Reza Mousavi
-% @Last Modified time: 2021-12-31 23:22:49
+% @Last Modified by:   Reza Mousavi
+% @Last Modified time: 2026-03-20 20:38:03
 %
 
 function IsPrime = isPrime(number)
     if number < 2
-        disp("The number must be greater than 2");
+        IsPrime = false;
+        return;
     end
-    for i = 2:sqrt(number)
+    if number == 2
         IsPrime = true;
+        return;
+    end
+    if mod(number, 2) == 0
+        IsPrime = false;
+        return;
+    end
+    limit = sqrt(number);
+    for i = 3:2:limit
         if mod(number, i) == 0
             IsPrime = false;
-            break;
+            return;
         end
     end
+    IsPrime = true;
 end
