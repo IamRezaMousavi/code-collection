@@ -3,16 +3,16 @@
 % Link: https://github.com/IamRezaMousavi
 %------------------------
 
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 
 \usepackage[T1]{fontenc}
-\renewcommand*\familydefault{\sfdefault}
+\renewcommand{\familydefault}{\sfdefault}
 
 \usepackage{geometry}
 \geometry{
   a4paper,
   top=1.8cm,
-  bottom=1in,
+  bottom=2cm,
   left=2.5cm,
   right=2.5cm
 }
@@ -20,7 +20,6 @@
 \setcounter{secnumdepth}{0} % remove section numbering
 
 \usepackage[dvipsnames]{xcolor}
-\colorlet{icnclr}{gray}
 
 \usepackage{enumitem}
 \setlist[itemize]{noitemsep,left=0pt..1.5em}
@@ -30,9 +29,9 @@
 \usepackage{titlesec}
 \titlespacing{\subsection}{0pt}{*0}{*0}
 \titlespacing{\subsubsection}{0pt}{*0}{*0}
-\titleformat{\section}{\color{Sepia}\large\fontseries{black}\selectfont\uppercase}{}{}{\ruleafter}[\global\RemVStrue]
+\titleformat{\section}{\color{Sepia}\Large\fontseries{black}\selectfont\uppercase}{}{}{\ruleafter}[\global\RemVStrue]
 \titleformat{\subsection}{\large\fontseries{semibold}\selectfont}{}{}{\rvs}
-\titleformat{\subsubsection}{\large\fontseries{medium}\selectfont}{}{}{}
+\titleformat{\subsubsection}{\normalfont\fontseries{medium}\selectfont}{}{}{}
 
 \usepackage{xhfill}
 \newcommand\ruleafter[1]{#1~\xrfill[.5ex]{1pt}[gray]}
@@ -48,7 +47,7 @@
 \usepackage[bookmarks=false]{hyperref}
 \hypersetup{
   colorlinks=true,
-  urlcolor=Sepia,
+  urlcolor=NavyBlue,
   pdftitle={My Resume},
 }
 
@@ -57,52 +56,63 @@
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \fancyhf{}
-\cfoot{\color{darkgray} Reza Mousavi Resume -- Page \thepage{} of \totalpages}
+\cfoot{\color{darkgray} \footnotesize Reza Mousavi Resume -- Page \thepage{} of \totalpages}
 
 \begin{document}
 
 %== HEADER ==%
 \begin{center}
-  {\Huge \textbf{Reza Mousavi}} \\[6pt]
+  {\Huge \textbf{Seyed Reza Mousavi}} \\[6pt]
   \href{mailto:iamrezamousavi@gmail.com}{iamrezamousavi@gmail.com} \;|\;
-  +98 939 631 1378 \;|\;
+  \href{tel:+989396311378}{+98 939 631 1378} \;|\;
   \href{https://github.com/IamRezaMousavi}{github.com/IamRezaMousavi}
 \end{center}
 
+\section{Summary}
+Full-stack and systems-oriented developer with strong expertise in
+low-level programming and high-performance backend development.
+Experienced in modern C++20, Python, and Rust, with a focus on building scalable,
+efficient, and concurrent systems across backend services, networking, and embedded platforms.
+Skilled in Linux system administration, asynchronous programming,
+and performance-critical networking (including C/DPDK).
+Passionate about secure computing and system design, currently pursuing a Master's
+in Computer Engineering with a specialization in Secure Computing,
+and actively developing projects ranging from IoT systems to
+mobile and cross-platform applications.
+
+
 \section{Education}
 %==============
-\subsection{Khatam University $|$ {\normalfont\textit{Master of
-Science}} \hfill 2025 -- Present}
+\subsection{Computer Engineering $|$
+{\normalfont\textit{Master of Science}} \hfill \footnotesize 2025 -- Present}
+\subsubsection{Khatam University}
 \begin{itemize}
-  \item Computer Engineering
   \item Major: Secure computing
 \end{itemize}
 
-\subsection{Arak University of Technology $|$
-{\normalfont\textit{Bachelor of Science}} \hfill 2018 -- 2024}
+\subsection{Electrical Engineering $|$
+{\normalfont\textit{Bachelor of Science}} \hfill \footnotesize 2018 -- 2024}
+\subsubsection{Arak University of Technology}
 \begin{itemize}
-  \item Electrical Engineering
   \item Major: Electronic
-  \item GPA: 16.5 / 20 ($\approx$ 3.3 / 4.0)
+  \item GPA: 16.5 / 20
 \end{itemize}
 
 \section{Experience}
 %===================
-\subsection{Software Engineer \hfill Jun 2024 -- Present}
-\subsubsection{Tabadol Amn Company}
+\subsection{C/C++ Developer \hfill \footnotesize June 2023 -- Present}
+\subsubsection{FPTA Co.}
 \begin{itemize}
-  \item Full-time software engineer
   \item System development with modern C++20 and STL
   \item Backend development with Python (FastAPI) and Async
     networking with Rust (Tokio)
   \item High-performance networking with C and DPDK on Linux
 \end{itemize}
 
-\subsection{System Administrator \hfill Sep 2022 -- Jun 2024}
+\subsection{System Administrator \hfill \footnotesize Sep 2022 -- Jun 2024}
 \subsubsection{Arak University of Technology}
 \begin{itemize}
-  \item Full-time system administrator
-  \item Managed internal university network systems
+  \item Managed internal network systems
 \end{itemize}
 
 \section{Skills}
@@ -118,34 +128,40 @@ Science}} \hfill 2025 -- Present}
 
 \section{Projects}
 %=================
+\subsection{CppDB Library}
+\begin{itemize}
+  \item Developed a C++ database library for simplified database access {\hfill C++}
+  \item Built with modern C++ focusing on performance and clean API design
+  \item Provides lightweight abstraction over database operations
+\end{itemize}
+
 \subsection{Digital Lock {\normalfont $|$
 \href{https://github.com/lamRezaMousavi/digital-lock}{Link}}}
 \begin{itemize}
-  \item STM32-based lock with fingerprint, SMS, keypad, RTC, LCD
-  \item FreeRTOS for hardware management {\hfill Embedded C}
-  \item Flutter mobile client with Sqflite, Provider, Material Design
-    3 {\hfill Flutter}
+  \item STM32-based smart lock with fingerprint, keypad, SMS, RTC, and LCD
+  \item Real-time firmware using FreeRTOS for managing hardware components {\hfill Embedded C}
+  \item Flutter mobile app with Sqflite and Provider for remote control {\hfill Flutter}
 \end{itemize}
 
 \subsection{Mafia Game {\normalfont $|$
 \href{https://github.com/lamRezaMousavi/Mafia}{Link}}}
 \begin{itemize}
-  \item Android app for Mafia game management {\hfill Android}
-  \item Kotlin, MVVM, View Binding, Coroutines, Serialization, Shared
-    Preferences {\hfill Kotlin}
+  \item Android app for managing Mafia game flow and role assignment {\hfill Android}
+  \item Built with Kotlin using MVVM, Coroutines, and View Binding {\hfill Kotlin}
+  \item Uses serialization and SharedPreferences for state management
 \end{itemize}
 
 \subsection{Star Smart System}
 \begin{itemize}
-  \item IoT home automation system
-  \item Python server with Django Rest Framework {\hfill Python}
-  \item ESP8266 boards programmed in C++ {\hfill Arduino}
+  \item IoT-based home automation system for remote device control
+  \item Backend built with Django REST Framework {\hfill Python}
+  \item ESP8266 modules programmed in C++ for device communication {\hfill Arduino}
 \end{itemize}
 
 \subsection{Ghermez}
 \begin{itemize}
-  \item Rust-based Download Manager
-  \item Rusqlite, Reqwest, Tokio {\hfill Rust}
+  \item Multi-threaded download manager written in Rust {\hfill Rust}
+  \item Uses Tokio, Reqwest, and Rusqlite for async networking and storage
 \end{itemize}
 
 \end{document}
