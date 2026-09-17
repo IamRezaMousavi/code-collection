@@ -6,9 +6,16 @@
 \documentclass[12pt]{article}
 
 \usepackage[T1]{fontenc}
-\renewcommand{\familydefault}{\sfdefault}
-
 \usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xhfill}
+\usepackage[bookmarks=false]{hyperref}
+\usepackage[page]{totalcount}
+\usepackage{fancyhdr}
+
+% Page Layout
 \geometry{
   a4paper,
   top=1.8cm,
@@ -17,46 +24,65 @@
   right=2.5cm
 }
 
+% Typography
+\renewcommand{\familydefault}{\sfdefault}
+
+% Section Formatting
 \setcounter{secnumdepth}{0} % remove section numbering
 
-\usepackage[dvipsnames]{xcolor}
+\titleformat{\section}
+{\color{Sepia}\Large\fontseries{semibold}\selectfont\uppercase}
+{}
+{}
+{\ruleafter}
 
-\usepackage{enumitem}
-\setlist[itemize]{noitemsep,left=0pt..1.5em}
+\titleformat{\subsection}
+{\large\fontseries{semibold}\selectfont}
+{}
+{}
+{}
+
+\titleformat{\subsubsection}
+{\normalfont\fontseries{medium}\selectfont}
+{}
+{}
+{}
+
+% \titlespacing{command}{left}{before}{after}
+\titlespacing{\section}{0pt}{2.0ex}{0.4ex}
+\titlespacing{\subsection}{0pt}{2.0ex}{0.5ex}
+\titlespacing{\subsubsection}{0pt}{0pt}{0.5ex}
+
+% Lists
+\setlist[itemize]{
+  noitemsep,
+  topsep=0pt,
+  leftmargin=1.5em
+}
 \setlist[description]{itemsep=0pt}
 \setlist[enumerate]{align=left}
 
-\usepackage{titlesec}
-\titlespacing{\subsection}{0pt}{*0}{*0}
-\titlespacing{\subsubsection}{0pt}{*0}{*0}
-\titleformat{\section}{\color{Sepia}\Large\fontseries{black}\selectfont\uppercase}{}{}{\ruleafter}[\global\RemVStrue]
-\titleformat{\subsection}{\large\fontseries{semibold}\selectfont}{}{}{\rvs}
-\titleformat{\subsubsection}{\normalfont\fontseries{medium}\selectfont}{}{}{}
-
-\usepackage{xhfill}
-\newcommand\ruleafter[1]{#1~\xrfill[.5ex]{1pt}[gray]}
-
-\newif\ifRemVS
-\newcommand{\rvs}{
-  \ifRemVS
-  \vspace{-1.5ex}
-  \fi
-  \global\RemVSfalse
-}
-
-\usepackage[bookmarks=false]{hyperref}
+% Hyperlinks
 \hypersetup{
   colorlinks=true,
   urlcolor=NavyBlue,
   pdftitle={My Resume},
 }
 
-\usepackage[page]{totalcount}
-\usepackage{fancyhdr}
+% Footer
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \fancyhf{}
-\cfoot{\color{darkgray} \footnotesize Reza Mousavi Resume -- Page \thepage{} of \totalpages}
+\cfoot{
+  \color{darkgray}
+  \footnotesize Reza Mousavi Resume -- Page \thepage{} of \totalpages
+}
+
+% Custom Commands
+% define ruleafter to print a rule after a section
+\newcommand{\ruleafter}[1]{%
+  #1~\xrfill[.5ex]{1pt}[gray]%
+}
 
 \begin{document}
 
@@ -71,27 +97,37 @@
 \section{Summary}
 Full-stack and systems-oriented developer with strong expertise in
 low-level programming and high-performance backend development.
-Experienced in modern C++20, Python, and Rust, with a focus on building scalable,
-efficient, and concurrent systems across backend services, networking, and embedded platforms.
+Experienced in modern C++20, Python, and Rust, with a focus on
+building scalable,
+efficient, and concurrent systems across backend services,
+networking, and embedded platforms.
 Skilled in Linux system administration, asynchronous programming,
 and performance-critical networking (including C/DPDK).
-Passionate about secure computing and system design, currently pursuing a Master's
+Passionate about secure computing and system design, currently
+pursuing a Master's
 in Computer Engineering with a specialization in Secure Computing,
 and actively developing projects ranging from IoT systems to
 mobile and cross-platform applications.
 
-
 \section{Education}
 %==============
-\subsection{Computer Engineering $|$
-{\normalfont\textit{Master of Science}} \hfill \footnotesize 2025 -- Present}
+\subsection{
+  Computer Engineering \textbar{}
+  \textit{Master of Science}
+  \hfill
+  \footnotesize 2025 -- Present
+}
 \subsubsection{Khatam University}
 \begin{itemize}
   \item Major: Secure computing
 \end{itemize}
 
-\subsection{Electrical Engineering $|$
-{\normalfont\textit{Bachelor of Science}} \hfill \footnotesize 2018 -- 2024}
+\subsection{
+  Electrical Engineering
+  \textbar{}
+  \textit{Bachelor of Science}
+  \hfill \footnotesize 2018 -- 2024
+}
 \subsubsection{Arak University of Technology}
 \begin{itemize}
   \item Major: Electronic
@@ -130,24 +166,29 @@ mobile and cross-platform applications.
 %=================
 \subsection{CppDB Library}
 \begin{itemize}
-  \item Developed a C++ database library for simplified database access {\hfill C++}
+  \item Developed a C++ database library for simplified database
+    access {\hfill C++}
   \item Built with modern C++ focusing on performance and clean API design
   \item Provides lightweight abstraction over database operations
 \end{itemize}
 
-\subsection{Digital Lock {\normalfont $|$
+\subsection{Digital Lock {\normalfont \textbar{}
 \href{https://github.com/lamRezaMousavi/digital-lock}{Link}}}
 \begin{itemize}
   \item STM32-based smart lock with fingerprint, keypad, SMS, RTC, and LCD
-  \item Real-time firmware using FreeRTOS for managing hardware components {\hfill Embedded C}
-  \item Flutter mobile app with Sqflite and Provider for remote control {\hfill Flutter}
+  \item Real-time firmware using FreeRTOS for managing hardware
+    components {\hfill Embedded C}
+  \item Flutter mobile app with Sqflite and Provider for remote
+    control {\hfill Flutter}
 \end{itemize}
 
-\subsection{Mafia Game {\normalfont $|$
+\subsection{Mafia Game {\normalfont \textbar{}
 \href{https://github.com/lamRezaMousavi/Mafia}{Link}}}
 \begin{itemize}
-  \item Android app for managing Mafia game flow and role assignment {\hfill Android}
-  \item Built with Kotlin using MVVM, Coroutines, and View Binding {\hfill Kotlin}
+  \item Android app for managing Mafia game flow and role assignment
+    {\hfill Android}
+  \item Built with Kotlin using MVVM, Coroutines, and View Binding
+    {\hfill Kotlin}
   \item Uses serialization and SharedPreferences for state management
 \end{itemize}
 
@@ -155,7 +196,8 @@ mobile and cross-platform applications.
 \begin{itemize}
   \item IoT-based home automation system for remote device control
   \item Backend built with Django REST Framework {\hfill Python}
-  \item ESP8266 modules programmed in C++ for device communication {\hfill Arduino}
+  \item ESP8266 modules programmed in C++ for device communication
+    {\hfill Arduino}
 \end{itemize}
 
 \subsection{Ghermez}
