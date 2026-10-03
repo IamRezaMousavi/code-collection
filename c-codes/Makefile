@@ -1,11 +1,11 @@
 PROJECT := core
 
-CC      := cc
-CCX     := c++
-CFLAGS  := -O2 -Wall -Wextra -I./inc -pthread
+CC       := cc
+CCX      := c++
+CFLAGS   := -O2 -Wall -Wextra
 CXXFLAGS := $(CFLAGS) -std=c++20
-LDFLAGS := -pthread
-LIBS    :=
+LDFLAGS  :=
+LIBS     :=
 
 SRC_DIR   := src
 INC_DIR   := inc
