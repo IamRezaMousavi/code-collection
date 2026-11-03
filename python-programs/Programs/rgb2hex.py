@@ -4,47 +4,39 @@
 """
 
 
-def ten2sixteen(number: str) -> str:
-    number = int(number)
-    sixteen = ''
+def ten2sixteen(number: int) -> str:
+    result = ''
     while True:
-        kharj = number // 16
-        baghi = number % 16
-        if baghi == 10:
-            sixteen = 'A' + sixteen
-        elif baghi == 11:
-            sixteen = 'B' + sixteen
-        elif baghi == 12:
-            sixteen = 'C' + sixteen
-        elif baghi == 13:
-            sixteen = 'D' + sixteen
-        elif baghi == 14:
-            sixteen = 'E' + sixteen
-        elif baghi == 15:
-            sixteen = 'F' + sixteen
+        digit = number % 16
+        if digit == 10:
+            result = 'A' + result
+        elif digit == 11:
+            result = 'B' + result
+        elif digit == 12:
+            result = 'C' + result
+        elif digit == 13:
+            result = 'D' + result
+        elif digit == 14:
+            result = 'E' + result
+        elif digit == 15:
+            result = 'F' + result
         else:
-            sixteen = str(baghi) + sixteen
-        number = kharj
-        if not number:
+            result = str(digit) + result
+        number //= 16
+        if number == 0:
             break
-    return sixteen
+    return result.zfill(2)
 
 
-def rgb2hex(rgb: str):
-    rgb = rgb.split()
+def rgb2hex(rgb: list[int]) -> str:
+    if len(rgb) != 3:
+        raise ValueError('rgb lenght must be exact 3')
 
-    red = ten2sixteen(rgb[0])
-    red = red if len(red) == 2 else '0' + red
-
-    green = ten2sixteen(rgb[1])
-    green = green if len(green) == 2 else '0' + green
-
-    blue = ten2sixteen(rgb[2])
-    blue = blue if len(blue) == 2 else '0' + blue
-
-    return '#' + red + green + blue
+    r, g, b = rgb
+    return '#' + ten2sixteen(r) + ten2sixteen(g) + ten2sixteen(b)
 
 
-print(rgb2hex('11 22 33'))
+print(rgb2hex([255, 128, 255]))
 
 # Edited on Fri Dec 31 23:03:00 2021
+# Edited on Tue Nov 03 16:07:00 2026
