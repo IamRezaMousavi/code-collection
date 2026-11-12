@@ -6,6 +6,7 @@
 
 from serial import Serial
 
+
 def main():
     with Serial("com3", 9600) as arduino:
         while arduino.isOpen():
@@ -16,6 +17,7 @@ def main():
             except KeyboardInterrupt:
                 print("Break")
                 break
+
 
 if __name__ == "__main__":
     main()

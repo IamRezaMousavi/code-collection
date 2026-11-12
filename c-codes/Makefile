@@ -1,15 +1,15 @@
 PROJECT := core
 
-CC       := cc
-CCX      := c++
-CFLAGS   := -O2 -Wall -Wextra
-CXXFLAGS := $(CFLAGS) -std=c++20
-LDFLAGS  :=
-LIBS     :=
-
 SRC_DIR   := src
 INC_DIR   := inc
 BUILD_DIR := build
+
+CC       := cc
+CXX      := c++
+CFLAGS   := -O2 -Wall -Wextra
+CXXFLAGS := $(CFLAGS) -std=c++20
+LDFLAGS  :=
+LDLIBS   :=
 
 TARGETS := $(BUILD_DIR)/$(PROJECT)
 
@@ -35,15 +35,15 @@ prepare:
 
 $(TARGETS): $(OBJS)
 	$(E) "  LINK     " $@
-	$(Q) $(CCX) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(LIBS)
+	$(Q) $(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(E) "  CC       " $<
-	$(Q) $(CC) $(CFLAGS) -MMD -MP -MF $(patsubst %.o,%.d,$@) -MT $@ -c $< -o $@
+	$(Q) $(CC) $(CFLAGS) -I$(INC_DIR) -MMD -MP -MF $(patsubst %.o,%.d,$@) -MT $@ -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(E) "  CCX      " $<
-	$(Q) $(CXX) $(CXXFLAGS) -MMD -MP -MF $(patsubst %.o,%.d,$@) -MT $@ -c $< -o $@
+	$(E) "  CXX      " $<
+	$(Q) $(CXX) $(CXXFLAGS) -I$(INC_DIR) -MMD -MP -MF $(patsubst %.o,%.d,$@) -MT $@ -c $< -o $@
 
 clean:
 	$(E) "  CLEAN"
