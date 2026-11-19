@@ -6,7 +6,7 @@ opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
 opt.smartindent = true
-opt.mouse = ""
+opt.mouse = ''
 
 opt.termguicolors = true
 vim.cmd('colorscheme habamax')
@@ -46,32 +46,6 @@ require('lazy').setup({
       'ojroques/nvim-hardline',
       config = function()
         require('hardline').setup({})
-      end,
-    },
-    {
-      'norcalli/nvim-colorizer.lua',
-      config = function()
-        require('colorizer').setup()
-      end,
-    },
-    {
-      'lewis6991/gitsigns.nvim',
-      config = function()
-        require('gitsigns').setup()
-      end,
-    },
-    {
-      'nvim-treesitter/nvim-treesitter',
-      build = ':TSUpdate',
-      config = function()
-        local configs = require('nvim-treesitter.configs')
-
-        configs.setup({
-          ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'elixir', 'heex', 'javascript', 'html' },
-          sync_install = false,
-          highlight = { enable = true },
-          indent = { enable = true },
-        })
       end,
     },
   },
