@@ -1,8 +1,8 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt autocd extendedglob notify
+HISTSIZE=10000
+SAVEHIST=10000
+setopt autocd extendedglob nomatch notify
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -14,6 +14,25 @@ compinit
 
 # User Config
 zstyle ':completion:*' menu select
+
+# Make sure that the terminal is in application mode when zle is active, since
+# only then values from $terminfo are valid
+if ((${+terminfo[smkx]})) && ((${+terminfo[rmkx]})); then
+	function zle-line-init() {
+		echoti smkx
+	}
+	function zle-line-finish() {
+		echoti rmkx
+	}
+	zle -N zle-line-init
+	zle -N zle-line-finish
+fi
+
+zmodload zsh/terminfo
+
+[[ -n "${terminfo[khome]}" ]] && bindkey "${terminfo[khome]}" beginning-of-line
+[[ -n "${terminfo[kend]}" ]] && bindkey "${terminfo[kend]}" end-of-line
+[[ -n "${terminfo[kdch1]}" ]] && bindkey "${terminfo[kdch1]}" delete-char
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
@@ -30,19 +49,18 @@ export MANROFFOPT='-c'
 export GPG_TTY=$(tty)
 
 # Install zsh-syntax-highlighting, zsh-autosuggestions
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Install pkgfile
 source /usr/share/doc/pkgfile/command-not-found.zsh
 
-if [ -d "$HOME/bin" ] ; then
-    export PATH="$HOME/bin:$PATH"
+if [ -d "$HOME/bin" ]; then
+	export PATH="$HOME/bin:$PATH"
+fi
+
+if [ -d "/opt/flutter" ]; then
+	export PATH="/opt/flutter/bin:$PATH"
 fi
 
 eval "$(starship init zsh)"
-
-# flutter
-export PATH=$PATH:/home/reza/flutter/bin
-export CHROME_EXECUTABLE=/opt/google/chrome/chrome
-
