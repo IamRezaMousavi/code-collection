@@ -1,6 +1,6 @@
 services:
   db:
-   image: redis
+   image: redis:8.10-alpine3.23
    container_name: redis
    command: redis-server --save 60 1 --loglevel warning
    ports:
@@ -11,6 +11,6 @@ services:
    build: .
    container_name: myflask
    ports:
-     - "80:80"
+     - "8000:80"
    depends_on:
      - db
